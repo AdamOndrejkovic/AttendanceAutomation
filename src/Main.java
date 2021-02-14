@@ -4,15 +4,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.time.YearMonth;
-import java.util.Calendar;
-import java.util.Locale;
-
 public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("gui/view/studentsPage.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("gui/view/logIn.fxml"));
         primaryStage.setTitle("Hello World");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
