@@ -8,7 +8,11 @@ public class User {
     private String userName;
 
     public User(int id, String name, String userName, String password,boolean teacher){
-
+        this.id = id;
+        this.name = name;
+        this.userName = userName;
+        this.password = password;
+        this.teacher = teacher;
     }
 
     public String getUserName() {

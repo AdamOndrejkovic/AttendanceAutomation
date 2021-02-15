@@ -1,11 +1,13 @@
 package dao;
 
 import be.User;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class Data {
 
-    public List<User> users;
+    public List<User> users = new ArrayList<>();
 
     public Data(){
         //adding users to the user list
@@ -28,4 +30,7 @@ public class Data {
         users.add(new User(17,"John","John1546","12345",false));
     }
 
+    public List<User> getUsers() {
+        return users;
+    }
 }
