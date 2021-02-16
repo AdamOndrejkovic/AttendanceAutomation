@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -59,18 +60,11 @@ public class LogInController implements Initializable {
                 e.printStackTrace();
             }
         }else{
-            System.out.println("User " + username + " with " + password + " was not found");
+            javafx.scene.control.Alert alert = new javafx.scene.control.Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Something went wrong with logging in!!!");
+            alert.showAndWait();
         }
-
-
-
-        if(username.equals("student") && password.equals("student"))
-        {
-            System.out.println("Welcome!");
-        }
-        else
-            System.out.println("Wrong username or password");
-
     }
 
     @Override
