@@ -2,6 +2,8 @@ package gui.controller;
 
 import bll.StatisticsManager;
 import bll.UserManager;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -95,6 +97,7 @@ public class StudentPageController implements Initializable {
                     vbox.setStyle("-fx-background-color: green");
                     if(!userManager.hasAttended(loggedUserID, currentDay, currentMonth, currentYear)) {
                         userManager.addAttendance(loggedUserID, currentDay, currentMonth, currentYear);
+                        drawPieChart(statisticsManager.getPresentDays(loggedUserID,selectedMonth),statisticsManager.getAbsenceDays(loggedUserID,selectedMonth));
                         Alert.displayAlert("Attendance Submitted","Your attendace: "+currentDay+"/"+currentMonth+"/"+currentYear+" has successfully been submitted!");
                     }
                 }
@@ -104,14 +107,19 @@ public class StudentPageController implements Initializable {
             tileCalendar.getChildren().add(vbox);
             vbox.setAlignment(Pos.CENTER);
         }
+        drawPieChart(statisticsManager.getPresentDays(loggedUserID,selectedMonth),statisticsManager.getAbsenceDays(loggedUserID,selectedMonth));
     }
 
     public int getLoggedUserID() {
         return loggedUserID;
     }
 
-    private void drawPieChart(){
-
+    private void drawPieChart(int presentDays,int absentDays){
+        ObservableList<PieChart.Data> pieData = FXCollections.observableArrayList(
+          new PieChart.Data("Present",presentDays),
+                new PieChart.Data("Absent",absentDays)
+        );
+        pieChart.setData(pieData);
     }
 
     public void setLoggedUserID(int loggedUserID) {
