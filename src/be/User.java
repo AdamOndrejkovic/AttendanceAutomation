@@ -1,11 +1,15 @@
 package be;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class User {
     private int id;
     private String name;
     private String password;
     private boolean teacher;
     private String userName;
+    private List<Attendance> attendance;
 
     public User(int id, String name, String userName, String password,boolean teacher){
         this.id = id;
@@ -13,6 +17,7 @@ public class User {
         this.userName = userName;
         this.password = password;
         this.teacher = teacher;
+        attendance = new ArrayList<>();
     }
 
     public String getUserName() {
@@ -25,10 +30,6 @@ public class User {
 
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -53,5 +54,9 @@ public class User {
 
     public void setTeacher(boolean teacher) {
         this.teacher = teacher;
+    }
+
+    public List<Attendance> getAttendances(){
+        return attendance;
     }
 }
