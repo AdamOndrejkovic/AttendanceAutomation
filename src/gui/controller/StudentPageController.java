@@ -1,13 +1,14 @@
 package gui.controller;
 
+import bll.StatisticsManager;
 import bll.UserManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
@@ -33,24 +34,21 @@ public class StudentPageController implements Initializable {
     @FXML
     private TextField idField;
     @FXML
-    private Button btnAttendance;
-    @FXML
-    private TabPane tabPane;
+    private PieChart pieChart;
 
     private static int loggedUserID = -1;
 
     private UserManager userManager;
+    private StatisticsManager statisticsManager;
 
     public StudentPageController() {
         userManager = new UserManager();
+        statisticsManager = new StatisticsManager();
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         addAttendanceTest();
-        btnAttendance.setOnAction(actionEvent -> {
-            userManager.printAttendance(Integer.valueOf(idField.getText()));
-        });
     }
 
     private void addAttendanceTest() {
@@ -65,7 +63,6 @@ public class StudentPageController implements Initializable {
     }
 
     public void actionMonthClick(ActionEvent e) {
-        tabPane.getSelectionModel().selectFirst();
         textMonth.setText(((Button) e.getSource()).getText());
 
         int selectedMonth = Month.valueOf(((Button) e.getSource()).getText().toUpperCase()).getValue();
@@ -96,7 +93,10 @@ public class StudentPageController implements Initializable {
             vbox.setOnMouseClicked(mouseEvent -> {
                 if (Integer.parseInt(label.getText()) == currentDay && currentMonth == selectedMonth) {
                     vbox.setStyle("-fx-background-color: green");
-                    userManager.addAttendance(loggedUserID, currentDay, currentMonth, currentYear);
+                    if(!userManager.hasAttended(loggedUserID, currentDay, currentMonth, currentYear)) {
+                        userManager.addAttendance(loggedUserID, currentDay, currentMonth, currentYear);
+                        Alert.displayAlert("Attendance Submitted","Your attendace: "+currentDay+"/"+currentMonth+"/"+currentYear+" has successfully been submitted!");
+                    }
                 }
             });
 
@@ -108,6 +108,10 @@ public class StudentPageController implements Initializable {
 
     public int getLoggedUserID() {
         return loggedUserID;
+    }
+
+    private void drawPieChart(){
+
     }
 
     public void setLoggedUserID(int loggedUserID) {

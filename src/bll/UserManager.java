@@ -13,7 +13,7 @@ public class UserManager {
         userDAO = new UserDAO();
     }
 
-    public Boolean isUserTeacher(int userID) {
+    public Boolean isTeacher(int userID) {
         return userDAO.getUserByID(userID).isTeacher();
     }
 
@@ -58,7 +58,7 @@ public class UserManager {
         String attendanceDate = day + "/" + month + "/" + year;
 
         if (user != null) {
-            if (user.getAttendances().stream().noneMatch(a -> a.getDate().equals(attendanceDate))) {
+            if (!hasAttended(userID,day,month,year)) {
                 user.getAttendances().add(new Attendance(0, attendanceDate, true));
             }
         }

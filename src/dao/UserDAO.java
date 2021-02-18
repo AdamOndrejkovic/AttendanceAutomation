@@ -12,7 +12,7 @@ public class UserDAO {
 
     public UserDAO() {
         users = new ArrayList<>();
-
+        users.add(new User(0, "0", "0", "0", false));
         users.add(new User(1, "Ava", "Ava4353", "12345", true));
         users.add(new User(2, "Adam", "Adam0923", "12345", true));
         users.add(new User(3, "Jeppe", "Jeppe0923", "12345", true));
