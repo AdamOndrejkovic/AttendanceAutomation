@@ -89,7 +89,7 @@ public class StudentPageController implements Initializable {
                     vbox.setStyle("-fx-background-color: red");
                 }
             }else if(i == currentDay && selectedMonth == currentMonth){
-                vbox.setStyle("-fx-background-color: blue");
+                vbox.setStyle("-fx-background-color: orange");
             }
 
             vbox.setOnMouseClicked(mouseEvent -> {
