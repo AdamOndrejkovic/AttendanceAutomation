@@ -3,6 +3,7 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
@@ -97,7 +98,7 @@
       </VBox>
    </left>
    <center>
-      <BorderPane>
+      <BorderPane fx:id="brdPaneAttendance" visible="false">
          <center>
             <VBox alignment="TOP_CENTER">
                <children>
@@ -123,7 +124,16 @@
          <bottom>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
-                  <PieChart fx:id="pieChart" />
+                  <VBox alignment="CENTER" prefHeight="167.0" prefWidth="350.0">
+                     <children>
+                        <PieChart fx:id="pieChart" />
+                        <HBox alignment="CENTER">
+                           <children>
+                              <Label fx:id="labelAbsence" text="\%" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
                </children>
             </HBox>
          </bottom>
