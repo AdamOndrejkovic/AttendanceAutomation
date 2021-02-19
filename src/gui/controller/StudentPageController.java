@@ -12,6 +12,8 @@ import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -37,6 +39,10 @@ public class StudentPageController implements Initializable {
     private TextField idField;
     @FXML
     private PieChart pieChart;
+    @FXML
+    private Label labelAbsence;
+    @FXML
+    private BorderPane brdPaneAttendance;
 
     private static int loggedUserID = -1;
 
@@ -65,6 +71,9 @@ public class StudentPageController implements Initializable {
     }
 
     public void actionMonthClick(ActionEvent e) {
+        if(!brdPaneAttendance.isVisible()) {
+            brdPaneAttendance.setVisible(true);
+        }
         textMonth.setText(((Button) e.getSource()).getText());
 
         int selectedMonth = Month.valueOf(((Button) e.getSource()).getText().toUpperCase()).getValue();
@@ -119,7 +128,22 @@ public class StudentPageController implements Initializable {
           new PieChart.Data("Present",presentDays),
                 new PieChart.Data("Absent",absentDays)
         );
-        pieChart.setData(pieData);
+        String preText = "Your absence is: ";
+        int totalDays = presentDays + absentDays;
+        if(totalDays>0){
+            pieChart.setVisible(true);
+            if(absentDays>0){
+                float absencePercentage = ((float)absentDays/(float)totalDays) * 100;
+
+                labelAbsence.setText(preText + (int)absencePercentage +"%");
+                pieChart.setData(pieData);
+            }else{
+                labelAbsence.setText(preText + "0%");
+            }
+        }else{
+            labelAbsence.setText("You haven't had any lessons this month!");
+            pieChart.setVisible(false);
+        }
     }
 
     public void setLoggedUserID(int loggedUserID) {
