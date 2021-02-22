@@ -1,58 +1,139 @@
 package gui.controller;
 
-import javafx.event.ActionEvent;
+import be.Student;
+import be.StudentClasses;
+import gui.model.AttendanceModel;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.ListView;
-import javafx.scene.control.MenuButton;
+import javafx.fxml.Initializable;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
-import java.io.IOException;
-import java.util.EventObject;
+import javax.swing.*;
+import java.awt.*;
+import java.io.FileNotFoundException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class TeacherViewController {
-    @FXML private TableView overviewTable;
-    @FXML private MenuButton menuBarSelectClass;
-    @FXML private ListView studentList;
-    @FXML private Text lblTotalPercentage;
-    @FXML private Text lblMissedClassCount;
-    @FXML private Text lblNotAttendedAtAll;
-    private EventObject event;
+public class TeacherViewController implements Initializable {
 
     @FXML
-    public void btnCreateNewClass(ActionEvent actionEvent) {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/gui/view/CreateNewStudentView.fxml"));
-            Parent root1 = (Parent) fxmlLoader.load();
-            Stage stage = new Stage();
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.initStyle(StageStyle.UNDECORATED);
-            stage.setTitle("ABC");
-            stage.setScene(new Scene(root1));
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
+    private TableView<Student> studentListTable;
+    TableColumn<Student, String> colName = new TableColumn<>("Name");
+    TableColumn<Student, String> colSurName = new TableColumn<>("Surname");
+    TableColumn<Student, String> colEmail = new TableColumn<>("E-mail");
+
+    @FXML
+    private TableView<StudentClasses> classesList;
+    TableColumn<StudentClasses, String> colClassesNames = new TableColumn<>("All Classes");
+
+    @FXML
+    private Text lblTotalPercentage;
+    @FXML
+    private Text lblMissedClassCount;
+    @FXML
+    private Text lblNotAttendedAtAll;
+
+    static String newName, newSurName, newEMail; //For creating new student in popup window
+
+    AttendanceModel attendanceModel ;
+
+    public TeacherViewController() throws FileNotFoundException {
+        attendanceModel = new AttendanceModel();
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+            setAllListView();
+            classesList.setOnMousePressed(mouseEvent -> {
+
+            });
+    }
+
+        /*
+    -----------------------------------------------------------------------------------
+    Everything related to lists in tables
+    -----------------------------------------------------------------------------------
+     */
+
+    private void setAllListView() {
+        setAllStudentList();
+        setAllClasses();
+    }
+
+    private void setAllStudentList() {
+        studentListTable.getColumns().addAll(colName, colSurName, colEmail);
+        colName.setCellValueFactory(new PropertyValueFactory<>("Name"));
+        colSurName.setCellValueFactory(new PropertyValueFactory<>("surname"));
+        colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
+        studentListTable.setItems(attendanceModel.getStudentsList());
+    }
+
+    private void setAllClasses(){
+        classesList.getColumns().add(colClassesNames);
+        colClassesNames.setCellValueFactory(new PropertyValueFactory<>("name"));
+        classesList.setItems(attendanceModel.getClassList());
+    }
+
+    /*
+    -----------------------------------------------------------------------------------
+    Manually add/edit/remove student methods
+    -----------------------------------------------------------------------------------
+     */
+
+    @FXML
+    private void btnCreateNewStudent() {
+        CreateNewStudent createNewStudent = new CreateNewStudent();
+        createNewStudent.openNewWindow();
+        attendanceModel.createStudent(newName, newSurName, newEMail);
+    }
+
+    @FXML
+    private void btnEditStudentsInfo() {
+    }
+
+    @FXML
+    private void btnDeleteStudent(){
+        if (!studentListTable.getSelectionModel().isEmpty()) {
+            attendanceModel.deleteStudent(studentListTable.getSelectionModel().getSelectedIndex());
+        } else {
+            alertSound();
         }
     }
-        @FXML
-    public void btnCreateNewStudent(ActionEvent actionEvent) {
-    }
+
+     /*
+    -----------------------------------------------------------------------------------
+    Manually add/edit/remove class methods
+    -----------------------------------------------------------------------------------
+     */
+
     @FXML
-    public void btnEditClass(ActionEvent actionEvent) {
+    private void btnCreateNewClass() {
+        String className = JOptionPane.showInputDialog(null, "Type class name:", "Create Class", JOptionPane.PLAIN_MESSAGE);
+        attendanceModel.createClass(className);
     }
+
     @FXML
-    public void btnEditStudentsInfo(ActionEvent actionEvent) {
+    private void btnEditClass() {
     }
+
     @FXML
-    public void btnDeleteClass(ActionEvent actionEvent) {
+    private void btnDeleteClass() {
+        if (!classesList.getSelectionModel().isEmpty()) {
+            attendanceModel.deleteClass(classesList.getSelectionModel().getSelectedIndex());
+        } else {
+            alertSound();
+        }
     }
-    @FXML
-    public void btnDeleteStudent(ActionEvent actionEvent) {
+
+    /*
+    -----------------------------------------------------------------------------------
+    Alert sound if something is wrong
+    -----------------------------------------------------------------------------------
+     */
+
+    private void alertSound() {
+        Toolkit.getDefaultToolkit().beep();
     }
 }
