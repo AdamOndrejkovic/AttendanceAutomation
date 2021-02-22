@@ -12,6 +12,11 @@ import java.util.ResourceBundle;
 
 public class LogInController implements Initializable {
 
+
+    public LogInController(){
+        //Mock_data mockData;
+    }
+
     @FXML
     private JFXTextField usernameField;
 
@@ -23,6 +28,7 @@ public class LogInController implements Initializable {
 
     @FXML
     void logIn(ActionEvent event) {
+       // System.out.println(Mock_data.getStudentsList());
         String username = usernameField.getText();
         String password = passwordField.getText();
         if(username.equals("student") && password.equals("student"))

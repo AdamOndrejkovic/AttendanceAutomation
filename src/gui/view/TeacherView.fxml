@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -14,71 +12,53 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
-            prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="gui.controller.TeacherViewController">
-    <MenuBar layoutX="168.0" layoutY="38.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-             AnchorPane.topAnchor="0.0">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controller.TeacherViewController">
+    <MenuBar layoutX="168.0" layoutY="38.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <Menu mnemonicParsing="false" text="File">
-            <MenuItem mnemonicParsing="false" onAction="#btnCreateNewClass" text="Create New Class"/>
-            <MenuItem mnemonicParsing="false" onAction="#btnCreateNewStudent" text="Register New Student"/>
+            <MenuItem mnemonicParsing="false" onAction="#btnCreateNewClass" text="Create New Class" />
+            <MenuItem mnemonicParsing="false" onAction="#btnCreateNewStudent" text="Register New Student" />
         </Menu>
         <Menu mnemonicParsing="false" text="Edit">
-            <MenuItem mnemonicParsing="false" onAction="#btnEditClass" text="Edit Class"/>
-            <MenuItem mnemonicParsing="false" onAction="#btnEditStudentsInfo" text="Edit Students Info"/>
+            <MenuItem mnemonicParsing="false" onAction="#btnEditClass" text="Edit Class" />
+            <MenuItem mnemonicParsing="false" onAction="#btnEditStudentsInfo" text="Edit Students Info" />
         </Menu>
         <Menu mnemonicParsing="false" text="Delete">
-            <MenuItem mnemonicParsing="false" onAction="#btnDeleteClass" text="Delete Class"/>
-            <MenuItem mnemonicParsing="false" onAction="#btnDeleteStudent" text="Delete Student"/>
+            <MenuItem mnemonicParsing="false" onAction="#btnDeleteClass" text="Delete Class" />
+            <MenuItem mnemonicParsing="false" onAction="#btnDeleteStudent" text="Delete Student" />
         </Menu>
     </MenuBar>
-    <HBox layoutX="159.0" layoutY="107.0" minWidth="100.0" prefWidth="150.0" AnchorPane.bottomAnchor="0.0"
-          AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="25.0"/>
-    <BorderPane layoutX="150.0" layoutY="62.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0"
-                AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
+    <HBox layoutX="159.0" layoutY="107.0" minWidth="100.0" prefWidth="150.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="25.0" />
+    <BorderPane layoutX="150.0" layoutY="62.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
         <center>
-          <TableView fx:id="overviewTable" BorderPane.alignment="CENTER"/>
+          <TableView fx:id="studentListTable" BorderPane.alignment="CENTER" />
         </center>
         <left>
-            <VBox maxHeight="1.7976931348623157E308" minWidth="100.0" prefWidth="150.0" BorderPane.alignment="CENTER">
-                <MenuButton fx:id="menuBarSelectClass" minWidth="100.0" mnemonicParsing="false" prefWidth="150.0"
-                            text="Select Class">
-                    <items>
-                        <MenuItem mnemonicParsing="false" text="temporary static"/>
-                    </items>
-                </MenuButton>
-                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Students List">
-                    <VBox.margin>
-                        <Insets left="5.0"/>
-                    </VBox.margin>
-                </Text>
-                <ListView fx:id="studentList" maxHeight="900.0" minWidth="100.0" prefWidth="150.0"
-                          VBox.vgrow="ALWAYS"/>
+            <VBox maxHeight="1.7976931348623157E308" minWidth="100.0" BorderPane.alignment="CENTER">
+            <TableView fx:id="classesList" minWidth="170.0" prefWidth="180.0" />
             </VBox>
         </left>
         <bottom>
             <FlowPane hgap="20.0" prefHeight="25.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                 <HBox prefHeight="25.0">
                     <padding>
-                        <Insets left="20.0"/>
+                        <Insets left="20.0" />
                     </padding>
-                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Total % Attendance"/>
-                    <Text fx:id="lblTotalPercentage" strokeType="OUTSIDE" strokeWidth="0.0"/>
+                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Total % Attendance" />
+                    <Text fx:id="lblTotalPercentage" strokeType="OUTSIDE" strokeWidth="0.0" />
                 </HBox>
                 <HBox prefHeight="25.0">
                     <padding>
-                        <Insets left="20.0"/>
+                        <Insets left="20.0" />
                     </padding>
-                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Missed Classes amount"/>
-                    <Text fx:id="lblMissedClassCount" strokeType="OUTSIDE" strokeWidth="0.0"/>
+                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Missed Classes amount" />
+                    <Text fx:id="lblMissedClassCount" strokeType="OUTSIDE" strokeWidth="0.0" />
                 </HBox>
                 <HBox prefHeight="25.0">
                     <padding>
-                        <Insets left="20.0"/>
+                        <Insets left="20.0" />
                     </padding>
-                    <Text strokeType="OUTSIDE" strokeWidth="0.0"
-                          text="Amount of students not attended at all:"/>
-                    <Text fx:id="lblNotAttendedAtAll" strokeType="OUTSIDE" strokeWidth="0.0"/>
+                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Amount of students not attended at all:" />
+                    <Text fx:id="lblNotAttendedAtAll" strokeType="OUTSIDE" strokeWidth="0.0" />
                 </HBox>
             </FlowPane>
         </bottom>
