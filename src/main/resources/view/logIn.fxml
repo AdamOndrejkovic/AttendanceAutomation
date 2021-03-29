@@ -30,7 +30,7 @@
       </JFXButton>
       <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="186.0" layoutY="14.0" pickOnBounds="true"
                  preserveRatio="true">
-         <Image url="@../../images/EASV-logo-EN.png"/>
+         <Image url="@../images/EASV-logo-EN.png"/>
       </ImageView>
    </Pane>
 </AnchorPane>

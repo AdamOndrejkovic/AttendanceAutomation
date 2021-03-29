@@ -21,7 +21,7 @@ public class CreateNewStudent {
 
     public void openNewWindow() {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(CreateNewStudent.class.getResource("/gui/view/CreateNewStudentView.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(CreateNewStudent.class.getResource("/view/CreateNewStudentView.fxml"));
             Parent root1 = fxmlLoader.load();
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);

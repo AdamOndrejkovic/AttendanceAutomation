@@ -40,7 +40,7 @@
             </VBox>
             <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                <ImageView fitHeight="72.0" fitWidth="78.0" pickOnBounds="true" preserveRatio="true">
-                  <Image url="@../../images/student.jpg"/>
+                  <Image url="@../images/student.jpg"/>
                </ImageView>
             </VBox>
          </HBox>
