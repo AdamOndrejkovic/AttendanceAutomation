@@ -2,9 +2,7 @@ package bll;
 
 import be.Attendance;
 import be.User;
-import dao.UserDAO;
-
-import java.util.Optional;
+import dal.dao.UserDAO;
 
 public class UserManager {
     private UserDAO userDAO;

@@ -2,7 +2,7 @@ package bll;
 
 import be.Attendance;
 import be.User;
-import dao.UserDAO;
+import dal.dao.UserDAO;
 
 import java.time.YearMonth;
 import java.util.Calendar;

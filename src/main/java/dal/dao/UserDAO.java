@@ -1,6 +1,5 @@
-package dao;
+package dal.dao;
 
-import be.Attendance;
 import be.User;
 
 import java.util.ArrayList;

@@ -1,7 +1,7 @@
 package bll;
 
 import be.User;
-import dao.UserDAO;
+import dal.dao.UserDAO;
 
 import java.util.List;
 
