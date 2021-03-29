@@ -15,12 +15,12 @@ public class DataBaseConnection {
     so database connection could be easily possible
     */
 
-    public static class DbConnectionProvider {
+    public static class DatabaseConnectionProvider {
 
         private static final String PROP_FILE = "data/connectionInfo.settings";
         private SQLServerDataSource ds;
 
-        public DbConnectionProvider()
+        public DatabaseConnectionProvider()
         {
             try
             {
