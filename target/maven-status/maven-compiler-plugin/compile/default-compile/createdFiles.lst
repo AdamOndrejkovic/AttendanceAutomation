@@ -1,0 +1,3 @@
+gui\controller\TeacherPageController.class
+gui\controller\RegisterStudentController.class
+gui\controller\RegisterTeacherController.class
