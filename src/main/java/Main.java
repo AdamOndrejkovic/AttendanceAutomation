@@ -15,7 +15,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("view/logIn.fxml"));
-        primaryStage.setTitle("Hello World");
+        primaryStage.setTitle("Attendance Check");
         primaryStage.setScene(new Scene(root));
         disableWarning();
         //Mock_data mockData = new Mock_data();
