@@ -34,9 +34,9 @@ public class CreateNewStudent {
     }
 
     public void btnCreateStudent(){
-        TeacherViewController.newName = fldName.getText();
-        TeacherViewController.newSurName = fldSurName.getText();
-        TeacherViewController.newEMail = fldEmail.getText();
+        TeacherPageController.newName = fldName.getText();
+        TeacherPageController.newSurName = fldSurName.getText();
+        TeacherPageController.newEMail = fldEmail.getText();
         closeWindow(buttonCreate);
     }
 

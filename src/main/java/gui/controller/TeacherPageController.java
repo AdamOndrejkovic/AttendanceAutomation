@@ -16,7 +16,7 @@ import java.io.FileNotFoundException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class TeacherViewController implements Initializable {
+public class TeacherPageController implements Initializable {
 
     @FXML
     private TableView<Student> studentListTable;
@@ -39,7 +39,7 @@ public class TeacherViewController implements Initializable {
 
     AttendanceModel attendanceModel ;
 
-    public TeacherViewController() throws FileNotFoundException {
+    public TeacherPageController() throws FileNotFoundException {
         attendanceModel = new AttendanceModel();
     }
 
