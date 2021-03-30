@@ -1,5 +1,6 @@
 package gui.controller;
 
+import com.jfoenix.controls.JFXPasswordField;
 import javafx.event.ActionEvent;
 import javafx.stage.Stage;
 import com.jfoenix.controls.JFXButton;
@@ -17,7 +18,7 @@ public class RegisterTeacherController {
     private JFXTextField email;
 
     @FXML
-    private JFXTextField password;
+    private JFXPasswordField password;
 
     @FXML
     private JFXButton registerTeacherButton;
