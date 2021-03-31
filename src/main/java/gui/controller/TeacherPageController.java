@@ -1,8 +1,6 @@
 package gui.controller;
 
-import be.Student;
-import be.StudentClasses;
-import gui.model.AttendanceModel;
+import be.user.Student;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
@@ -23,11 +21,11 @@ public class TeacherPageController implements Initializable {
     TableColumn<Student, String> colName = new TableColumn<>("Name");
     TableColumn<Student, String> colSurName = new TableColumn<>("Surname");
     TableColumn<Student, String> colEmail = new TableColumn<>("E-mail");
-
+/*
     @FXML
     private TableView<StudentClasses> classesList;
     TableColumn<StudentClasses, String> colClassesNames = new TableColumn<>("All Classes");
-
+*/
     @FXML
     private Text lblTotalPercentage;
     @FXML
@@ -37,18 +35,12 @@ public class TeacherPageController implements Initializable {
 
     static String newName, newSurName, newEMail; //For creating new student in popup window
 
-    AttendanceModel attendanceModel ;
-
     public TeacherPageController() throws FileNotFoundException {
-        attendanceModel = new AttendanceModel();
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
             setAllListView();
-            classesList.setOnMousePressed(mouseEvent -> {
-
-            });
     }
 
         /*
@@ -67,13 +59,9 @@ public class TeacherPageController implements Initializable {
         colName.setCellValueFactory(new PropertyValueFactory<>("Name"));
         colSurName.setCellValueFactory(new PropertyValueFactory<>("surname"));
         colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
-        studentListTable.setItems(attendanceModel.getStudentsList());
     }
 
     private void setAllClasses(){
-        classesList.getColumns().add(colClassesNames);
-        colClassesNames.setCellValueFactory(new PropertyValueFactory<>("name"));
-        classesList.setItems(attendanceModel.getClassList());
     }
 
     /*
@@ -86,7 +74,6 @@ public class TeacherPageController implements Initializable {
     private void btnCreateNewStudent() {
         CreateNewStudent createNewStudent = new CreateNewStudent();
         createNewStudent.openNewWindow();
-        attendanceModel.createStudent(newName, newSurName, newEMail);
     }
 
     @FXML
@@ -95,11 +82,6 @@ public class TeacherPageController implements Initializable {
 
     @FXML
     private void btnDeleteStudent(){
-        if (!studentListTable.getSelectionModel().isEmpty()) {
-            attendanceModel.deleteStudent(studentListTable.getSelectionModel().getSelectedIndex());
-        } else {
-            alertSound();
-        }
     }
 
      /*
@@ -111,7 +93,6 @@ public class TeacherPageController implements Initializable {
     @FXML
     private void btnCreateNewClass() {
         String className = JOptionPane.showInputDialog(null, "Type class name:", "Create Class", JOptionPane.PLAIN_MESSAGE);
-        attendanceModel.createClass(className);
     }
 
     @FXML
@@ -120,11 +101,6 @@ public class TeacherPageController implements Initializable {
 
     @FXML
     private void btnDeleteClass() {
-        if (!classesList.getSelectionModel().isEmpty()) {
-            attendanceModel.deleteClass(classesList.getSelectionModel().getSelectedIndex());
-        } else {
-            alertSound();
-        }
     }
 
     /*

@@ -1,3 +1,4 @@
+import dal.db.DatabaseConnection;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -7,6 +8,7 @@ import sun.misc.Unsafe;
 
 import java.io.*;
 import java.lang.reflect.Field;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class Main extends Application {
@@ -18,8 +20,6 @@ public class Main extends Application {
         primaryStage.setTitle("Attendance Check");
         primaryStage.setScene(new Scene(root));
         disableWarning();
-        //Mock_data mockData = new Mock_data();
-        data();
         primaryStage.show();
     }
 
@@ -39,9 +39,6 @@ public class Main extends Application {
         } catch (Exception e) {
             System.out.println("hiding warning error");
         }
-    }
-
-    public void data() throws IOException {
     }
 }
 

@@ -1,21 +1,16 @@
 package bll;
 
-import be.Attendance;
-import be.User;
-import dal.dao.UserDAO;
-
 import java.time.YearMonth;
 import java.util.Calendar;
 import java.util.Locale;
 
 public class StatisticsManager {
-    private UserDAO userDAO;
 
     public StatisticsManager() {
-        userDAO = new UserDAO();
     }
 
     public int getPresentDays(int userID, int month) {
+        /*
         int presentDays = 0;
 
         User user = userDAO.getUserByID(userID);
@@ -28,9 +23,13 @@ public class StatisticsManager {
 
         }
         return presentDays;
+
+         */
+        return -1;
     }
 
     public int getAbsenceDays(int userID, int month) {
+        /*
         Calendar calendar = Calendar.getInstance(Locale.GERMANY);
         int currentMonth = calendar.get(Calendar.MONTH) + 1;
 
@@ -43,7 +42,7 @@ public class StatisticsManager {
             int daysInMonth = YearMonth.of(calendar.get(Calendar.YEAR), month).lengthOfMonth();
             return daysInMonth - getPresentDays(userID, month);
         }
-
-        return 0;
+         */
+        return -1;
     }
 }
