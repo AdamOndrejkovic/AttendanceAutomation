@@ -1,18 +1,30 @@
 package dal.db;
 
+import be.user.Student;
 import be.user.Teacher;
 import dal.ITeacherRepository;
 
 import java.util.List;
 
 public class DBTeacherRepository implements ITeacherRepository {
-
-    DatabaseConnection connection;
-    List<Teacher> teacherList;
+    private DatabaseConnection connection;
 
     public DBTeacherRepository() {
         connection = new DatabaseConnection();
     }
 
-    // TODO: 3/30/2021 register a new teacher 
+    @Override
+    public Teacher getTeacher() {
+        return null;
+    }
+
+    @Override
+    public List<Student> getAllTeachers() {
+        return null;
+    }
+
+    @Override
+    public void registerTeacher(String firstName, String lastName, String email, String password) {
+
+    }
 }
