@@ -5,12 +5,12 @@ import dal.IStudentRepository;
 
 import java.util.List;
 
-public class StudentRepository implements IStudentRepository {
+public class DBStudentRepository implements IStudentRepository {
 
     DatabaseConnection connection;
     List<Student> studentList;
 
-    public StudentRepository() {
+    public DBStudentRepository() {
         connection = new DatabaseConnection();
     }
 
