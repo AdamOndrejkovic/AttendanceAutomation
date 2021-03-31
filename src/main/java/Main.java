@@ -1,3 +1,4 @@
+import bll.AuthenticationManager;
 import dal.db.DatabaseConnection;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -12,7 +13,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class Main extends Application {
-    ArrayList list = new ArrayList();
 
     @Override
     public void start(Stage primaryStage) throws Exception{

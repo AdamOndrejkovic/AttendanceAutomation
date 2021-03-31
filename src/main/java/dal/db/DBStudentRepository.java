@@ -6,14 +6,24 @@ import dal.IStudentRepository;
 import java.util.List;
 
 public class DBStudentRepository implements IStudentRepository {
-
-    DatabaseConnection connection;
-    List<Student> studentList;
+    private DatabaseConnection connection;
 
     public DBStudentRepository() {
         connection = new DatabaseConnection();
     }
 
-    // TODO: 3/30/2021 register new student
-    // TODO: 3/30/2021 return all students
+    @Override
+    public Student getStudent() {
+        return null;
+    }
+
+    @Override
+    public List<Student> getAllStudents() {
+        return null;
+    }
+
+    @Override
+    public void registerStudent(String firstName, String lastName, String email, String password) {
+
+    }
 }

@@ -1,8 +1,10 @@
 package gui.controller;
 
+import bll.AuthenticationManager;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
+import dal.db.DBAuthentication;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -33,7 +35,6 @@ public class LogInController implements Initializable {
 
     @FXML
     void logIn(ActionEvent event) throws IOException {
-       // System.out.println(Mock_data.getStudentsList());
         String username = usernameField.getText();
         String password = passwordField.getText();
 
