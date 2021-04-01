@@ -25,12 +25,11 @@ public class DBTeacherRepository implements ITeacherRepository {
             if(statement.execute(sql)){
                 ResultSet resultSet = statement.getResultSet();
                 if(resultSet.next()){
-                    Teacher teacher = new Teacher(
+                    return new Teacher(
                             resultSet.getString("FirstName"),
                             resultSet.getString("LastName"),
                             resultSet.getString("Email"),
                             resultSet.getInt("ID"));
-                    return teacher;
                 }
             }
         } catch (SQLException ex) {

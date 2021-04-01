@@ -24,12 +24,11 @@ public class DBStudentRepository implements IStudentRepository {
             if(statement.execute(sql)){
                 ResultSet resultSet = statement.getResultSet();
                 if(resultSet.next()){
-                    Student student = new Student(
+                    return new Student(
                             resultSet.getString("FirstName"),
                             resultSet.getString("LastName"),
                             resultSet.getString("Email"),
                             resultSet.getInt("ID"));
-                    return student;
                 }
             }
         } catch (SQLException ex) {
