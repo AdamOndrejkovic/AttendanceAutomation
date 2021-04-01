@@ -20,11 +20,10 @@ public class DBTeacherRepository implements ITeacherRepository {
         try (Connection con = connection.getConnection()) {
             String sql = "Select * From Teacher WHERE ID = ?";
             PreparedStatement statement = con.prepareStatement(sql);
-            statement.setInt(1,ID);
-
-            if(statement.execute(sql)){
+            statement.setInt(1, ID);
+            if (statement.execute()) {
                 ResultSet resultSet = statement.getResultSet();
-                if(resultSet.next()){
+                if (resultSet.next()) {
                     return new Teacher(
                             resultSet.getString("FirstName"),
                             resultSet.getString("LastName"),
@@ -45,15 +44,14 @@ public class DBTeacherRepository implements ITeacherRepository {
             String sql = "Select * From Teacher";
             Statement statement = con.createStatement();
 
-            if(statement.execute(sql)){
+            if (statement.execute(sql)) {
                 ResultSet resultSet = statement.getResultSet();
-                while(resultSet.next()){
-                    Teacher teacher = new Teacher(
+                while (resultSet.next()) {
+                    teachers.add(new Teacher(
                             resultSet.getString("FirstName"),
                             resultSet.getString("LastName"),
                             resultSet.getString("Email"),
-                            resultSet.getInt("ID"));
-                    teachers.add(teacher);
+                            resultSet.getInt("ID")));
                 }
                 return teachers;
             }
@@ -68,10 +66,10 @@ public class DBTeacherRepository implements ITeacherRepository {
         try (Connection con = connection.getConnection()) {
             String sql = "INSERT INTO Teacher Values(?,?,?,?)";
             PreparedStatement statement = con.prepareStatement(sql);
-            statement.setString(1,firstName);
-            statement.setString(2,lastName);
-            statement.setString(3,email);
-            statement.setString(4,password);
+            statement.setString(1, firstName);
+            statement.setString(2, lastName);
+            statement.setString(3, email);
+            statement.setString(4, password);
             statement.execute();
         } catch (SQLException ex) {
             //TODO

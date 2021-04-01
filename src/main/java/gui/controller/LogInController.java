@@ -4,7 +4,13 @@ import bll.AuthenticationManager;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
+import dal.IClassRepository;
+import dal.IStudentRepository;
+import dal.ITeacherRepository;
 import dal.db.DBAuthentication;
+import dal.db.DBClassRepository;
+import dal.db.DBStudentRepository;
+import dal.db.DBTeacherRepository;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -35,6 +41,8 @@ public class LogInController implements Initializable {
 
     @FXML
     void logIn(ActionEvent event) throws IOException {
+        IClassRepository classRepository = new DBClassRepository();
+        classRepository.createClass("DBO");
         String username = usernameField.getText();
         String password = passwordField.getText();
 

@@ -1,5 +1,3 @@
-import bll.AuthenticationManager;
-import dal.db.DatabaseConnection;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
