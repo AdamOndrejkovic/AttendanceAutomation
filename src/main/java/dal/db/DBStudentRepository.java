@@ -19,11 +19,10 @@ public class DBStudentRepository implements IStudentRepository {
         try (Connection con = connection.getConnection()) {
             String sql = "Select * From Student WHERE ID = ?";
             PreparedStatement statement = con.prepareStatement(sql);
-            statement.setInt(1,ID);
-
-            if(statement.execute(sql)){
+            statement.setInt(1, ID);
+            if (statement.execute()) {
                 ResultSet resultSet = statement.getResultSet();
-                if(resultSet.next()){
+                if (resultSet.next()) {
                     return new Student(
                             resultSet.getString("FirstName"),
                             resultSet.getString("LastName"),
@@ -44,15 +43,14 @@ public class DBStudentRepository implements IStudentRepository {
             String sql = "Select * From Student";
             Statement statement = con.createStatement();
 
-            if(statement.execute(sql)){
+            if (statement.execute(sql)) {
                 ResultSet resultSet = statement.getResultSet();
-                while(resultSet.next()){
-                    Student student = new Student(
+                while (resultSet.next()) {
+                    students.add(new Student(
                             resultSet.getString("FirstName"),
-                    resultSet.getString("LastName"),
-                    resultSet.getString("Email"),
-                    resultSet.getInt("ID"));
-                    students.add(student);
+                            resultSet.getString("LastName"),
+                            resultSet.getString("Email"),
+                            resultSet.getInt("ID")));
                 }
                 return students;
             }
@@ -67,10 +65,10 @@ public class DBStudentRepository implements IStudentRepository {
         try (Connection con = connection.getConnection()) {
             String sql = "INSERT INTO Student Values(?,?,?,?)";
             PreparedStatement statement = con.prepareStatement(sql);
-            statement.setString(1,firstName);
-            statement.setString(2,lastName);
-            statement.setString(3,email);
-            statement.setString(4,password);
+            statement.setString(1, firstName);
+            statement.setString(2, lastName);
+            statement.setString(3, email);
+            statement.setString(4, password);
             statement.execute();
         } catch (SQLException ex) {
             //TODO

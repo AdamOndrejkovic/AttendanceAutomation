@@ -39,4 +39,9 @@ public abstract class User {
     public int getId() {
         return id;
     }
+
+    @Override
+    public String toString() {
+        return firstName + " "+lastName;
+    }
 }

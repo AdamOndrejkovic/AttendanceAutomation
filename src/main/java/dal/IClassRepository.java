@@ -9,6 +9,7 @@ import java.util.List;
 public interface IClassRepository {
     void createClass(String className);
 
+    Class getClass(int classID);
     List<Class> getAllClasses();
     List<Class> getAllStudentClasses(int studentID);
     List<Class> getAllTeacherClasses(int teacherID);

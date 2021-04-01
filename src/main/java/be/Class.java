@@ -1,8 +1,8 @@
 package be;
 
 public class Class {
-    String name;
-    int id;
+    private String name;
+    private int id;
 
     public Class(int id, String name) {
         this.name = name;
@@ -19,5 +19,10 @@ public class Class {
 
     public int getId() {
         return id;
+    }
+
+    @Override
+    public String toString() {
+        return getName();
     }
 }
