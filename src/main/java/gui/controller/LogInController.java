@@ -24,7 +24,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class LogInController implements Initializable {
-
+    private Session session = Session.getInstance();
 
     public LogInController(){
         //Mock_data mockData;

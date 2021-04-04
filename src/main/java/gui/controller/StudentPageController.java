@@ -17,7 +17,7 @@ import java.util.Calendar;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-public class StudentPageController implements Initializable {
+public class StudentPageController implements Initializable{
 
     private Calendar calendar = Calendar.getInstance(Locale.GERMANY);
 
