@@ -24,8 +24,10 @@ public class DBAuthentication implements IAuthentication {
     public Object getAuthentication(String email, String password){
 
         if (authenticateTeacher(email, password)){
+            System.out.println(getTeacherWithCredintials(email, password));
             return getTeacherWithCredintials(email, password);
         }else if(authenticateStudent(email,password)){
+            System.out.println(getStudentWithCredintials(email,password));
             return getStudentWithCredintials(email,password);
         }
         return null;
@@ -77,7 +79,7 @@ public class DBAuthentication implements IAuthentication {
 
     public Teacher getTeacherWithCredintials(String email, String password){
         try (Connection con = connection.getConnection()) {
-            String sql = "SELECT Email, Password FROM Teacher WHERE Email = ? AND Password = ?";
+            String sql = "SELECT * FROM Teacher WHERE Email = ? AND Password = ?";
             PreparedStatement statement = con.prepareStatement(sql);
             statement.setString(1, email);
             statement.setString(2, password);
@@ -100,7 +102,7 @@ public class DBAuthentication implements IAuthentication {
 
     public Student getStudentWithCredintials(String email, String password){
         try (Connection con = connection.getConnection()) {
-            String sql = "SELECT Email, Password FROM Student WHERE Email = ? AND Password = ?";
+            String sql = "SELECT * FROM Student WHERE Email = ? AND Password = ?";
             PreparedStatement statement = con.prepareStatement(sql);
             statement.setString(1, email);
             statement.setString(2, password);

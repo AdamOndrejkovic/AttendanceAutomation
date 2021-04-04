@@ -1,5 +1,8 @@
 package gui.controller;
 
+import be.user.Student;
+import be.user.Teacher;
+import be.user.User;
 import bll.AuthenticationManager;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
@@ -26,6 +29,9 @@ import java.util.ResourceBundle;
 public class LogInController implements Initializable {
 
 
+    private Teacher teacher;
+    private Student student;
+
     public LogInController(){
         //Mock_data mockData;
     }
@@ -41,18 +47,23 @@ public class LogInController implements Initializable {
 
     @FXML
     void logIn(ActionEvent event) throws IOException {
-        IClassRepository classRepository = new DBClassRepository();
-        classRepository.createClass("DBO");
         String username = usernameField.getText();
         String password = passwordField.getText();
 
-        if(username.equals("student") && password.equals("student"))
+        IClassRepository classRepository = new DBClassRepository();
+        classRepository.createClass("DBO");
+
+        AuthenticationManager authenticationManager = new AuthenticationManager();
+        User user = (User) authenticationManager.checkCredintials(username, password);
+
+
+        if(user instanceof  Teacher)
         {
-            System.out.println("Welcome student!");
+            System.out.println("Welcome Teacher");
         }
-        if(username.equals("teacher") && password.equals("teacher"))
+        if(user instanceof Student)
         {
-            System.out.println("Welcome teacher!");
+            System.out.println("Welcome Student!");
         }
         else
             System.out.println("Wrong username or password");
