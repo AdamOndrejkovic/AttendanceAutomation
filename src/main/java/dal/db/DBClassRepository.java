@@ -71,31 +71,101 @@ public class DBClassRepository implements IClassRepository {
 
     @Override
     public List<Class> getAllStudentClasses(int studentID) {
+        List<Class> classes = new ArrayList<>();
+
+        try (Connection con = connection.getConnection()) {
+            String sql = "SELECT ClassID, Class.ClassName FROM StudentClass INNER JOIN Class ON StudentClass.ClassID = Class.ID WHERE StudentID = ?";
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setInt(1, studentID);
+
+            if (statement.execute(sql)) {
+                ResultSet resultSet = statement.getResultSet();
+                while (resultSet.next()) {
+                    classes.add(new Class(resultSet.getInt("ID"),
+                            resultSet.getString("ClassName")));
+                }
+                return classes;
+            }
+
+        } catch (SQLException ex) {
+            //TODO
+        }
         return null;
     }
 
     @Override
     public List<Class> getAllTeacherClasses(int teacherID) {
+        List<Class> classes = new ArrayList<>();
+
+        try (Connection con = connection.getConnection()) {
+            String sql = "SELECT ClassID, Class.ClassName FROM TeacherClass INNER JOIN Class ON TeacherClass.ClassID = Class.ID WHERE TeacherID = ?";
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setInt(1, teacherID);
+
+            if (statement.execute(sql)) {
+                ResultSet resultSet = statement.getResultSet();
+                while (resultSet.next()) {
+                    classes.add(new Class(resultSet.getInt("ID"),
+                            resultSet.getString("ClassName")));
+                }
+                return classes;
+            }
+
+        } catch (SQLException ex) {
+            //TODO
+        }
         return null;
     }
 
     @Override
-    public void assignStudentClass(int studentID, int classID) {
-
+    public void assignStudentToClass(int studentID, int classID) {
+        try (Connection con = connection.getConnection()) {
+            String sql = "INSERT INTO StudentClass VALUES (?,?)";
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setInt(1, studentID);
+            statement.setInt(2, classID);
+            statement.execute();
+        } catch (SQLException ex) {
+            //TODO
+        }
     }
 
     @Override
-    public void assignTeacherClass(int teacherID, int classID) {
-
+    public void assignTeacherToClass(int teacherID, int classID) {
+        try (Connection con = connection.getConnection()) {
+            String sql = "INSERT INTO TeacherClass VALUES (?,?)";
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setInt(1, teacherID);
+            statement.setInt(2, classID);
+            statement.execute();
+        } catch (SQLException ex) {
+            //TODO
+        }
     }
 
     @Override
-    public void removeStudentClass(int studentID, int classID) {
-
+    public void removeStudentFromClass(int studentID, int classID) {
+        try (Connection con = connection.getConnection()) {
+            String sql = "DELETE FROM StudentClass WHERE StudentID = ? AND ClassID = ?";
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setInt(1, studentID);
+            statement.setInt(2, classID);
+            statement.execute();
+        } catch (SQLException ex) {
+            //TODO
+        }
     }
 
     @Override
-    public void removeTeacherClass(int teacherID, int classID) {
-
+    public void removeTeacherFromClass(int teacherID, int classID) {
+        try (Connection con = connection.getConnection()) {
+            String sql = "DELETE FROM TeacherClass WHERE TeacherID = ? AND ClassID = ?;";
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setInt(1, teacherID);
+            statement.setInt(2, classID);
+            statement.execute();
+        } catch (SQLException ex) {
+            //TODO
+        }
     }
 }
