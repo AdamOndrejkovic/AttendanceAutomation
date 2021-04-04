@@ -14,8 +14,8 @@ public interface IClassRepository {
     List<Class> getAllStudentClasses(int studentID);
     List<Class> getAllTeacherClasses(int teacherID);
 
-    void assignStudentClass(int studentID, int classID);
-    void assignTeacherClass(int teacherID, int classID);
-    void removeStudentClass(int studentID, int classID);
-    void removeTeacherClass(int teacherID, int classID);
+    void assignStudentToClass(int studentID, int classID);
+    void assignTeacherToClass(int teacherID, int classID);
+    void removeStudentFromClass(int studentID, int classID);
+    void removeTeacherFromClass(int teacherID, int classID);
 }
