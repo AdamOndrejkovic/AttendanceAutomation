@@ -7,7 +7,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
 
-public class RegisterTeacherController {
+public class RegisterTeacherController{
     @FXML
     private JFXTextField fistName;
 
