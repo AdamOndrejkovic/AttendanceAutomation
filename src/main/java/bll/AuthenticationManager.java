@@ -10,11 +10,10 @@ public class AuthenticationManager {
         authentication = new DBAuthentication();
     }
 
-    public boolean authenticateTeacher(String email, String password) {
-        return authentication.authenticateTeacher(email, password);
+
+    public Object checkCredintials(String username, String password) {
+        return authentication.getAuthentication(username, password);
     }
 
-    public boolean authenticateStudent(String email, String password) {
-        return authentication.authenticateStudent(email, password);
-    }
+
 }

@@ -1,5 +1,8 @@
 package gui.controller;
 
+import be.user.Student;
+import be.user.Teacher;
+import be.user.User;
 import bll.AuthenticationManager;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
@@ -26,6 +29,9 @@ import java.util.ResourceBundle;
 public class LogInController implements Initializable {
     private Session session = Session.getInstance();
 
+    private Teacher teacher;
+    private Student student;
+
     public LogInController(){
         //Mock_data mockData;
     }
@@ -41,18 +47,27 @@ public class LogInController implements Initializable {
 
     @FXML
     void logIn(ActionEvent event) throws IOException {
-        IClassRepository classRepository = new DBClassRepository();
-        classRepository.createClass("DBO");
         String username = usernameField.getText();
         String password = passwordField.getText();
 
-        if(username.equals("student") && password.equals("student"))
+        IClassRepository classRepository = new DBClassRepository();
+        classRepository.createClass("DBO");
+
+        AuthenticationManager authenticationManager = new AuthenticationManager();
+        User user = (User) authenticationManager.checkCredintials(username, password);
+
+
+        if(user instanceof  Teacher)
         {
-            System.out.println("Welcome student!");
+            System.out.println("Welcome Teacher");
+            goToTeachersView();
+            closeView();
         }
-        if(username.equals("teacher") && password.equals("teacher"))
+        if(user instanceof Student)
         {
-            System.out.println("Welcome teacher!");
+            System.out.println("Welcome Student!");
+            goToStudentsView();
+            closeView();
         }
         else
             System.out.println("Wrong username or password");
@@ -74,5 +89,37 @@ public class LogInController implements Initializable {
         stage.setScene(new Scene(root2));
         stage.centerOnScreen();
         stage.show();
+    }
+
+    public  void goToTeachersView() throws IOException {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/teacherPage.fxml"));
+            Parent root1 = (Parent) fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root1));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public  void goToStudentsView() throws IOException {
+       try {
+           FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/studentPage.fxml"));
+            Parent root1 = (Parent) fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root1));
+            stage.show();
+        } catch (IOException e) {
+           e.printStackTrace();
+       }
+    }
+
+    public void closeView(){
+                    // get a handle to the stage
+            Stage stage = (Stage) logInButton.getScene().getWindow();
+            // do what you have to do
+            stage.close();
+
     }
 }
