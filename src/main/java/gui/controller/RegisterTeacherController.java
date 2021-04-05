@@ -38,7 +38,7 @@ public class RegisterTeacherController{
     }
 
 
-    public void setController(LogInController logInController) {
+    public void setController(LoginController logInController) {
     }
 
 }
