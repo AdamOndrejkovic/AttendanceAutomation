@@ -26,15 +26,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class LogInController implements Initializable {
+public class LogInController {
     private Session session = Session.getInstance();
-
-    private Teacher teacher;
-    private Student student;
-
-    public LogInController(){
-        //Mock_data mockData;
-    }
 
     @FXML
     private JFXTextField usernameField;
@@ -46,54 +39,51 @@ public class LogInController implements Initializable {
     private JFXButton logInButton;
 
     @FXML
-    void logIn(ActionEvent event) throws IOException {
+    void logIn(ActionEvent event) {
         String username = usernameField.getText();
         String password = passwordField.getText();
-
-        IClassRepository classRepository = new DBClassRepository();
-        classRepository.createClass("DBO");
 
         AuthenticationManager authenticationManager = new AuthenticationManager();
         User user = (User) authenticationManager.checkCredintials(username, password);
 
 
-        if(user instanceof  Teacher)
-        {
+        if (user instanceof Teacher) {
             System.out.println("Welcome Teacher");
             goToTeachersView();
-            closeView();
-        }
-        if(user instanceof Student)
-        {
+        } else if (user instanceof Student) {
             System.out.println("Welcome Student!");
             goToStudentsView();
-            closeView();
-        }
-        else
+        } else {
             System.out.println("Wrong username or password");
+        }
 
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-
+    public void registerTeacher(ActionEvent actionEvent) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/registerTeacher.fxml"));
+            Parent root = fxmlLoader.load();
+            Stage stage = (Stage) logInButton.getScene().getWindow();
+            stage.setScene(new Scene(root));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void registerTeacher(ActionEvent actionEvent) throws IOException {
-        Parent root2;
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/registerTeacher.fxml"));
-        root2 = (Parent) fxmlLoader.load();
-        fxmlLoader.<RegisterTeacherController>getController().setController(this);
-
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root2));
-        stage.centerOnScreen();
-        stage.show();
-    }
-
-    public  void goToTeachersView() throws IOException {
+    public void goToTeachersView() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/teacherPage.fxml"));
+            Parent root = fxmlLoader.load();
+            Stage stage = (Stage) logInButton.getScene().getWindow();
+            stage.setScene(new Scene(root));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void goToStudentsView() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/studentPage.fxml"));
             Parent root1 = (Parent) fxmlLoader.load();
             Stage stage = new Stage();
             stage.setScene(new Scene(root1));
@@ -101,25 +91,5 @@ public class LogInController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public  void goToStudentsView() throws IOException {
-       try {
-           FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/studentPage.fxml"));
-            Parent root1 = (Parent) fxmlLoader.load();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root1));
-            stage.show();
-        } catch (IOException e) {
-           e.printStackTrace();
-       }
-    }
-
-    public void closeView(){
-                    // get a handle to the stage
-            Stage stage = (Stage) logInButton.getScene().getWindow();
-            // do what you have to do
-            stage.close();
-
     }
 }

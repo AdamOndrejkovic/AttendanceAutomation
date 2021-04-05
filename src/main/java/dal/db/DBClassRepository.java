@@ -238,5 +238,5 @@ public class DBClassRepository implements IClassRepository {
         }
 
         return null;
-    } // dates faust
+    }
 }
