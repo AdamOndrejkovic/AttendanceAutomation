@@ -8,7 +8,12 @@ public class Date {
         this.month = month;
         this.day = day;
     }
-
+    public Date(String date){
+        String[] arrayDate = date.split("-");
+        year = Integer.parseInt(arrayDate[0]);
+        month = Integer.parseInt(arrayDate[1]);
+        day = Integer.parseInt(arrayDate[2]);
+    }
     public int getYear() {
         return year;
     }
