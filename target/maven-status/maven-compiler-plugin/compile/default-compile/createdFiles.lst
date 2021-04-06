@@ -2,7 +2,6 @@ dal\db\DatabaseConnection.class
 dal\IAuthentication.class
 gui\controller\TeacherPageController.class
 dal\db\DBTeacherRepository.class
-gui\controller\CreateNewStudent.class
 Main.class
 bll\StatisticsManager.class
 dal\db\DBStudentRepository.class
@@ -10,7 +9,6 @@ be\user\User.class
 bll\ClassManager.class
 bll\StudentManager.class
 dal\db\DBClassRepository.class
-gui\controller\LogInController.class
 bll\LoginManager.class
 dal\IClassRepository.class
 be\Class.class
@@ -25,4 +23,5 @@ dal\db\DBAuthentication.class
 gui\controller\Alert.class
 gui\controller\RegisterStudentController.class
 gui\controller\RegisterTeacherController.class
+gui\controller\LoginController.class
 dal\ITeacherRepository.class
