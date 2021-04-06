@@ -7,25 +7,15 @@ import bll.AuthenticationManager;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
-import dal.IClassRepository;
-import dal.IStudentRepository;
-import dal.ITeacherRepository;
-import dal.db.DBAuthentication;
-import dal.db.DBClassRepository;
-import dal.db.DBStudentRepository;
-import dal.db.DBTeacherRepository;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 public class LoginController {
 
@@ -64,7 +54,7 @@ public class LoginController {
 
     public void registerTeacher(ActionEvent actionEvent) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/registerTeacher.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/register/registerTeacher.fxml"));
             Parent root = fxmlLoader.load();
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
@@ -78,7 +68,7 @@ public class LoginController {
 
     public void goToTeachersView(Stage stage, User user) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/teacherPage.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/userpage/teacherPage.fxml"));
             Parent root = fxmlLoader.load();
             stage.setScene(new Scene(root));
             Session.getInstance().startSession(user, stage);
@@ -90,7 +80,7 @@ public class LoginController {
 
     public void goToStudentsView(Stage stage, User user) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/studentPage.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/userpage/studentPage.fxml"));
             Parent root = fxmlLoader.load();
             stage.setScene(new Scene(root));
             Session.getInstance().startSession(user, stage);
