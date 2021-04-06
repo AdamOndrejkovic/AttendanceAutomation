@@ -24,10 +24,8 @@ public class DBAuthentication implements IAuthentication {
     public Object getAuthentication(String email, String password){
 
         if (authenticateTeacher(email, password)){
-            System.out.println(getTeacherWithCredintials(email, password));
             return getTeacherWithCredintials(email, password);
         }else if(authenticateStudent(email,password)){
-            System.out.println(getStudentWithCredintials(email,password));
             return getStudentWithCredintials(email,password);
         }
         return null;

@@ -1,8 +1,10 @@
 package gui.controller;
+import be.Class;
 import be.user.Student;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -26,6 +28,10 @@ public class TeacherPageController implements Initializable {
 /*
     TableColumn<Class, String> colClassesNames = new TableColumn<>("All Classes");
 */
+    @FXML
+    private ListView<Class> classListTable;
+    TableColumn<Class, String> className = new TableColumn<>();
+
     @FXML
     private Text lblTotalPercentage;
     @FXML
@@ -57,6 +63,7 @@ public class TeacherPageController implements Initializable {
     }
 
     private void setAllClasses(){
+
     }
 
     @FXML
