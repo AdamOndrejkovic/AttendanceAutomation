@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.TilePane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane prefHeight="593.0" prefWidth="844.0" style="-fx-border-color: black; -fx-border-width: 0;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controller.StudentPageController">
+   <top>
+      <HBox alignment="CENTER_LEFT" prefHeight="79.0" prefWidth="844.0" spacing="10.0" style="-fx-background-color: #92a8b1;" BorderPane.alignment="CENTER">
+         <HBox alignment="CENTER">
+            <children>
+               <ImageView fitHeight="94.0" fitWidth="321.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@../../images/EASV-no-bg.png" />
+                  </image>
+               </ImageView>
+            </children>
+         </HBox>
+         <HBox alignment="BOTTOM_RIGHT" prefHeight="94.0" prefWidth="524.0" HBox.hgrow="ALWAYS">
+            <opaqueInsets>
+               <Insets />
+            </opaqueInsets>
+            <children>
+               <VBox alignment="BOTTOM_RIGHT" prefHeight="200.0" prefWidth="357.0">
+                  <children>
+                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Mantas Pasakarnis">
+                        <font>
+                           <Font size="23.0" />
+                        </font>
+                     </Text>
+                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Computer Science">
+                        <font>
+                           <Font name="System Bold" size="39.0" />
+                        </font>
+                     </Text>
+                  </children>
+                  <padding>
+                     <Insets right="5.0" />
+                  </padding>
+               </VBox>
+            </children>
+         </HBox>
+      </HBox>
+   </top>
+   <left>
+      <VBox prefHeight="487.0" prefWidth="150.0" style="-fx-background-color: #e6f2f5;" BorderPane.alignment="CENTER">
+         <HBox alignment="CENTER">
+            <VBox.margin>
+               <Insets bottom="10.0" top="10.0" />
+            </VBox.margin>
+            <opaqueInsets>
+               <Insets left="5.0" />
+            </opaqueInsets>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Months:">
+               <font>
+                  <Font size="26.0" />
+               </font>
+            </Text>
+         </HBox>
+         <VBox alignment="TOP_CENTER" prefHeight="430.0" prefWidth="150.0" spacing="10.0" stylesheets="@../../stylesheets/months.css">
+            <JFXButton onAction="#actionMonthClick" text="January" />
+            <JFXButton onAction="#actionMonthClick" text="February" />
+            <JFXButton onAction="#actionMonthClick" text="March" />
+            <JFXButton onAction="#actionMonthClick" text="April" />
+            <JFXButton onAction="#actionMonthClick" text="May" />
+            <JFXButton onAction="#actionMonthClick" text="June" />
+            <JFXButton onAction="#actionMonthClick" text="July" />
+            <JFXButton onAction="#actionMonthClick" text="August" />
+            <JFXButton onAction="#actionMonthClick" text="September" />
+            <JFXButton onAction="#actionMonthClick" text="October" />
+            <JFXButton onAction="#actionMonthClick" text="November" />
+            <JFXButton onAction="#actionMonthClick" text="December" />
+         </VBox>
+      </VBox>
+   </left>
+   <center>
+      <VBox alignment="TOP_CENTER" prefHeight="522.0" prefWidth="694.0" BorderPane.alignment="CENTER">
+         <Text fx:id="textMonth" strokeType="OUTSIDE" strokeWidth="0.0">
+            <font>
+               <Font size="50.0" />
+            </font>
+         </Text>
+         <TilePane fx:id="tileCalendar" prefHeight="447.0" prefTileHeight="50.0" prefTileWidth="50.0" prefWidth="683.0">
+            <VBox.margin>
+               <Insets left="10.0" top="10.0" />
+            </VBox.margin>
+         </TilePane>
+      </VBox>
+   </center>
+   <bottom>
+      <HBox alignment="CENTER_RIGHT" BorderPane.alignment="CENTER">
+         <children>
+            <HBox alignment="BOTTOM_RIGHT" />
+         </children>
+      </HBox>
+   </bottom>
+</BorderPane>
