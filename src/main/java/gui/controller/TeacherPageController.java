@@ -1,6 +1,6 @@
 package gui.controller;
-
 import be.user.Student;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
@@ -12,19 +12,19 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.FileNotFoundException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class TeacherPageController implements Initializable {
 
     @FXML
     private TableView<Student> studentListTable;
-    TableColumn<Student, String> colName = new TableColumn<>("Name");
-    TableColumn<Student, String> colSurName = new TableColumn<>("Surname");
-    TableColumn<Student, String> colEmail = new TableColumn<>("E-mail");
+    TableColumn<Student, String> colName = new TableColumn<>();
+    TableColumn<Student, String> colSurName = new TableColumn<>();
+    TableColumn<Student, String> colEmail = new TableColumn<>();
 /*
-    @FXML
-    private TableView<StudentClasses> classesList;
-    TableColumn<StudentClasses, String> colClassesNames = new TableColumn<>("All Classes");
+    TableColumn<Class, String> colClassesNames = new TableColumn<>("All Classes");
 */
     @FXML
     private Text lblTotalPercentage;
@@ -35,45 +35,28 @@ public class TeacherPageController implements Initializable {
 
     static String newName, newSurName, newEMail; //For creating new student in popup window
 
-    public TeacherPageController() throws FileNotFoundException {
+    public TeacherPageController() {
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-            setAllListView();
-    }
-
-        /*
-    -----------------------------------------------------------------------------------
-    Everything related to lists in tables
-    -----------------------------------------------------------------------------------
-     */
-
-    private void setAllListView() {
         setAllStudentList();
         setAllClasses();
     }
 
     private void setAllStudentList() {
         studentListTable.getColumns().addAll(colName, colSurName, colEmail);
-        colName.setCellValueFactory(new PropertyValueFactory<>("Name"));
-        colSurName.setCellValueFactory(new PropertyValueFactory<>("surname"));
+        colName.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+        colSurName.setCellValueFactory(new PropertyValueFactory<>("lastName"));
         colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
+
+        Student student = new Student("Faustas","Anulis","faustasanulis@gmail.com",1);
+        List<Student> studentList = new ArrayList<>();
+        studentList.add(student);
+        studentListTable.setItems(FXCollections.observableList(studentList));
     }
 
     private void setAllClasses(){
-    }
-
-    /*
-    -----------------------------------------------------------------------------------
-    Manually add/edit/remove student methods
-    -----------------------------------------------------------------------------------
-     */
-
-    @FXML
-    private void btnCreateNewStudent() {
-        CreateNewStudent createNewStudent = new CreateNewStudent();
-        createNewStudent.openNewWindow();
     }
 
     @FXML
@@ -84,32 +67,11 @@ public class TeacherPageController implements Initializable {
     private void btnDeleteStudent(){
     }
 
-     /*
-    -----------------------------------------------------------------------------------
-    Manually add/edit/remove class methods
-    -----------------------------------------------------------------------------------
-     */
-
-    @FXML
-    private void btnCreateNewClass() {
-        String className = JOptionPane.showInputDialog(null, "Type class name:", "Create Class", JOptionPane.PLAIN_MESSAGE);
-    }
-
     @FXML
     private void btnEditClass() {
     }
 
     @FXML
     private void btnDeleteClass() {
-    }
-
-    /*
-    -----------------------------------------------------------------------------------
-    Alert sound if something is wrong
-    -----------------------------------------------------------------------------------
-     */
-
-    private void alertSound() {
-        Toolkit.getDefaultToolkit().beep();
     }
 }

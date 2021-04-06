@@ -18,7 +18,7 @@
             <children>
                <ImageView fitHeight="94.0" fitWidth="321.0" pickOnBounds="true" preserveRatio="true">
                   <image>
-                     <Image url="@../images/EASV-no-bg.png" />
+                     <Image url="@../../images/EASV-no-bg.png" />
                   </image>
                </ImageView>
             </children>
@@ -33,7 +33,7 @@
             </VBox>
             <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                <ImageView fitHeight="72.0" fitWidth="78.0" pickOnBounds="true" preserveRatio="true">
-                  <Image url="@../images/student.jpg" />
+                  <Image url="@../../images/student.jpg" />
                </ImageView>
             </VBox>
          </HBox>
@@ -54,7 +54,7 @@
                </font>
             </Text>
          </HBox>
-         <VBox alignment="TOP_CENTER" prefHeight="430.0" prefWidth="150.0" spacing="10.0" stylesheets="@../stylesheets/months.css">
+         <VBox alignment="TOP_CENTER" prefHeight="430.0" prefWidth="150.0" spacing="10.0" stylesheets="@../../stylesheets/months.css">
             <JFXButton onAction="#actionMonthClick" text="January" />
             <JFXButton onAction="#actionMonthClick" text="February" />
             <JFXButton onAction="#actionMonthClick" text="March" />
