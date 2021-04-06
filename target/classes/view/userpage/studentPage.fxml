@@ -2,6 +2,7 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
@@ -11,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane prefHeight="593.0" prefWidth="844.0" style="-fx-border-color: black; -fx-border-width: 0;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controller.StudentPageController">
+<BorderPane prefHeight="654.0" prefWidth="1160.0" style="-fx-border-color: black; -fx-border-width: 0;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controller.StudentPageController">
    <top>
       <HBox alignment="CENTER_LEFT" prefHeight="79.0" prefWidth="844.0" spacing="10.0" style="-fx-background-color: #92a8b1;" BorderPane.alignment="CENTER">
          <HBox alignment="CENTER">
@@ -50,21 +51,28 @@
       </HBox>
    </top>
    <left>
-      <VBox prefHeight="487.0" prefWidth="150.0" style="-fx-background-color: #e6f2f5;" BorderPane.alignment="CENTER">
+      <VBox prefHeight="531.0" prefWidth="185.0" style="-fx-background-color: #e6f2f5;" BorderPane.alignment="CENTER">
          <HBox alignment="CENTER">
-            <VBox.margin>
-               <Insets bottom="10.0" top="10.0" />
-            </VBox.margin>
             <opaqueInsets>
                <Insets left="5.0" />
             </opaqueInsets>
+         </HBox>
+         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+            <children>
+               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Class:">
+                  <font>
+                     <Font size="26.0" />
+                  </font>
+               </Text>
+               <ChoiceBox prefWidth="150.0" />
+            </children>
+         </VBox>
+         <VBox alignment="TOP_CENTER" prefHeight="426.0" prefWidth="185.0" spacing="10.0" stylesheets="@../../stylesheets/months.css">
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Months:">
                <font>
                   <Font size="26.0" />
                </font>
             </Text>
-         </HBox>
-         <VBox alignment="TOP_CENTER" prefHeight="430.0" prefWidth="150.0" spacing="10.0" stylesheets="@../../stylesheets/months.css">
             <JFXButton onAction="#actionMonthClick" text="January" />
             <JFXButton onAction="#actionMonthClick" text="February" />
             <JFXButton onAction="#actionMonthClick" text="March" />
@@ -77,6 +85,9 @@
             <JFXButton onAction="#actionMonthClick" text="October" />
             <JFXButton onAction="#actionMonthClick" text="November" />
             <JFXButton onAction="#actionMonthClick" text="December" />
+            <padding>
+               <Insets bottom="10.0" />
+            </padding>
          </VBox>
       </VBox>
    </left>
