@@ -1,7 +1,7 @@
 package be;
 
 public class Date {
-    int year, month, day;
+    private int year, month, day;
 
     public Date(int year, int month, int day) {
         this.year = year;

@@ -1,9 +1,11 @@
 package gui.controller;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.stage.Stage;
 
 public class RegisterStudentController{
 
@@ -17,17 +19,18 @@ public class RegisterStudentController{
     private JFXTextField email;
 
     @FXML
-    private JFXTextField password;
+    private JFXPasswordField password;
 
     @FXML
     private JFXButton registerStudentButton;
 
     @FXML
-    private JFXButton cancelButton;
+    private JFXButton cancelStudentButton;
 
     @FXML
-    void cancelRegistration(ActionEvent event) {
-
+    void cancelStudent(ActionEvent event) {
+        Stage stage = (Stage) cancelStudentButton.getScene().getWindow();
+        stage.close();
     }
 
     @FXML

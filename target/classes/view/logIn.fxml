@@ -17,14 +17,15 @@
       </effect>
       <JFXTextField fx:id="usernameField" layoutX="139.0" layoutY="141.0" prefHeight="36.0" prefWidth="292.0" promptText="Username" />
       <JFXPasswordField fx:id="passwordField" focusColor="#36657c" layoutX="139.0" layoutY="209.0" prefHeight="36.0" prefWidth="292.0" promptText="Password" />
-      <JFXButton fx:id="logInButton" buttonType="RAISED" layoutX="322.0" layoutY="279.0" onAction="#login" prefHeight="36.0" prefWidth="109.0" ripplerFill="#3fb4ea" style="-fx-background-color: #3fb4ea;" text="Log in">
+      <JFXButton fx:id="logInButton" buttonType="RAISED" layoutX="308.0" layoutY="281.0" onAction="#login" prefHeight="45.0" prefWidth="123.0" ripplerFill="#3fb4ea" style="-fx-background-color: #3fb4ea;" text="Log in">
          <font>
-            <Font size="14.0" />
+            <Font size="20.0" />
          </font>
       </JFXButton>
       <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="186.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
          <Image url="@../images/EASV-logo-EN.png" />
       </ImageView>
-      <JFXButton fx:id="registerTeacherButton" layoutX="139.0" layoutY="285.0" onAction="#registerTeacher" text="Register as new teacher" />
+      <JFXButton layoutX="139.0" layoutY="279.0" onAction="#registerTeacher" text="Register as new teacher" />
+      <JFXButton layoutX="139.0" layoutY="303.0" onAction="#registerStudent" text="Register as new student" />
    </Pane>
 </AnchorPane>

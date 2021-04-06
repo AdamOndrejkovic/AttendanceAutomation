@@ -66,6 +66,20 @@ public class LoginController {
         }
     }
 
+    public void registerStudent(ActionEvent actionEvent) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/register/registerStudent.fxml"));
+            Parent root = fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void goToTeachersView(Stage stage, User user) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/userpage/teacherPage.fxml"));
