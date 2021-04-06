@@ -27,7 +27,7 @@ public class Session extends TimerTask {
     public void startSession(User user, Stage stage) {
         this.user = user;
         this.stage = stage;
-        timer.schedule(this, 10000);
+        timer.schedule(this, 900000);
     }
 
     private void stopSession(Stage stage) {
