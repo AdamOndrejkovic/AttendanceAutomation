@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.image.Image?>
@@ -31,12 +30,12 @@
             <children>
                <VBox alignment="BOTTOM_RIGHT" prefHeight="200.0" prefWidth="357.0">
                   <children>
-                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Mantas Pasakarnis">
+                     <Text fx:id="txtFullName" strokeType="OUTSIDE" strokeWidth="0.0">
                         <font>
                            <Font size="23.0" />
                         </font>
                      </Text>
-                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Computer Science">
+                     <Text fx:id="txtClass" strokeType="OUTSIDE" strokeWidth="0.0">
                         <font>
                            <Font name="System Bold" size="39.0" />
                         </font>
@@ -51,43 +50,26 @@
       </HBox>
    </top>
    <left>
-      <VBox prefHeight="531.0" prefWidth="185.0" style="-fx-background-color: #e6f2f5;" BorderPane.alignment="CENTER">
-         <HBox alignment="CENTER">
-            <opaqueInsets>
-               <Insets left="5.0" />
-            </opaqueInsets>
-         </HBox>
-         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+      <VBox alignment="TOP_CENTER" prefHeight="531.0" prefWidth="185.0" style="-fx-background-color: #e6f2f5;" BorderPane.alignment="CENTER">
+         <VBox alignment="CENTER">
             <children>
                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Class:">
                   <font>
                      <Font size="26.0" />
                   </font>
                </Text>
-               <ChoiceBox prefWidth="150.0" />
+               <ChoiceBox fx:id="choiceClass" prefWidth="150.0" />
             </children>
          </VBox>
-         <VBox alignment="TOP_CENTER" prefHeight="426.0" prefWidth="185.0" spacing="10.0" stylesheets="@../../stylesheets/months.css">
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Months:">
-               <font>
-                  <Font size="26.0" />
-               </font>
-            </Text>
-            <JFXButton onAction="#actionMonthClick" text="January" />
-            <JFXButton onAction="#actionMonthClick" text="February" />
-            <JFXButton onAction="#actionMonthClick" text="March" />
-            <JFXButton onAction="#actionMonthClick" text="April" />
-            <JFXButton onAction="#actionMonthClick" text="May" />
-            <JFXButton onAction="#actionMonthClick" text="June" />
-            <JFXButton onAction="#actionMonthClick" text="July" />
-            <JFXButton onAction="#actionMonthClick" text="August" />
-            <JFXButton onAction="#actionMonthClick" text="September" />
-            <JFXButton onAction="#actionMonthClick" text="October" />
-            <JFXButton onAction="#actionMonthClick" text="November" />
-            <JFXButton onAction="#actionMonthClick" text="December" />
-            <padding>
-               <Insets bottom="10.0" />
-            </padding>
+         <VBox alignment="CENTER">
+            <children>
+               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Month:">
+                  <font>
+                     <Font size="26.0" />
+                  </font>
+               </Text>
+               <ChoiceBox fx:id="choiceMonth" prefWidth="150.0" />
+            </children>
          </VBox>
       </VBox>
    </left>

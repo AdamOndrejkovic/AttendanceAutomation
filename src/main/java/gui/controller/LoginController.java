@@ -26,6 +26,7 @@ public class LoginController {
     @FXML
     private JFXButton logInButton;
 
+    private Session session = Session.getInstance();
     private AuthenticationManager authenticationManager;
 
     public LoginController(){
@@ -81,26 +82,26 @@ public class LoginController {
     }
 
     public void goToTeachersView(Stage stage, User user) {
+        session.startSession(user, stage);
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/userpage/teacherPage.fxml"));
             Parent root = fxmlLoader.load();
             stage.setScene(new Scene(root));
-            Session.getInstance().startSession(user, stage);
 
         } catch (IOException e) {
-            e.printStackTrace();
+            session.stopSession(stage);
         }
     }
 
     public void goToStudentsView(Stage stage, User user) {
+        session.startSession(user, stage);
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/userpage/studentPage.fxml"));
             Parent root = fxmlLoader.load();
             stage.setScene(new Scene(root));
-            Session.getInstance().startSession(user, stage);
 
         } catch (IOException e) {
-            e.printStackTrace();
+            session.stopSession(stage);
         }
     }
 }

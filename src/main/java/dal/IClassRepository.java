@@ -16,8 +16,10 @@ public interface IClassRepository {
     List<Class> getAllTeacherClasses(int teacherID);
 
     void assignStudent(int studentID, int classID);
-    void assignTeacher(int teacherID, int classID);
     void removeStudent(int studentID, int classID);
+    void addStudentPresence(int studentID, int classID, Date date);
+
+    void assignTeacher(int teacherID, int classID);
     void removeTeacher(int teacherID, int classID);
 
     List<Date> getClassSchedule(int classID);

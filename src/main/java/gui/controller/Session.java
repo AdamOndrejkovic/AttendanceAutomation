@@ -30,7 +30,7 @@ public class Session extends TimerTask {
         timer.schedule(this, 900000);
     }
 
-    private void stopSession(Stage stage) {
+    public void stopSession(Stage stage) {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -54,6 +54,10 @@ public class Session extends TimerTask {
             INSTANCE = new Session();
         }
         return INSTANCE;
+    }
+
+    public User getUser(){
+        return user;
     }
 
 

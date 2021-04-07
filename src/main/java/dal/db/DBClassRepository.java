@@ -82,10 +82,10 @@ public class DBClassRepository implements IClassRepository {
             PreparedStatement statement = con.prepareStatement(sql);
             statement.setInt(1, studentID);
 
-            if (statement.execute(sql)) {
+            if (statement.execute()) {
                 ResultSet resultSet = statement.getResultSet();
                 while (resultSet.next()) {
-                    classes.add(new Class(resultSet.getInt("ID"),
+                    classes.add(new Class(resultSet.getInt("ClassID"),
                             resultSet.getString("ClassName")));
                 }
                 return classes;
@@ -154,6 +154,20 @@ public class DBClassRepository implements IClassRepository {
             PreparedStatement statement = con.prepareStatement(sql);
             statement.setInt(1, studentID);
             statement.setInt(2, classID);
+            statement.execute();
+        } catch (SQLException ex) {
+            //TODO
+        }
+    }
+
+    @Override
+    public void addStudentPresence(int studentID, int classID, Date date) {
+        try (Connection con = connection.getConnection()) {
+            String sql = "INSERT INTO StudentPresence VALUES (?,?,?)";
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setInt(1, studentID);
+            statement.setInt(2, classID);
+            statement.setString(3, date.toString());
             statement.execute();
         } catch (SQLException ex) {
             //TODO
