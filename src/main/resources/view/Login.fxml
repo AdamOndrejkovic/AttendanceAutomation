@@ -9,12 +9,14 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.control.Label?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controller.LoginController">
    <Pane layoutX="14.0" layoutY="14.0" prefHeight="370.0" prefWidth="570.0" style="-fx-background-color: white;">
       <effect>
          <DropShadow blurType="GAUSSIAN" />
       </effect>
+      <Label fx:id="message" layoutX="139.0" layoutY="100.0"/>
       <JFXTextField fx:id="usernameField" layoutX="139.0" layoutY="141.0" prefHeight="36.0" prefWidth="292.0" promptText="Username" />
       <JFXPasswordField fx:id="passwordField" focusColor="#36657c" layoutX="139.0" layoutY="209.0" prefHeight="36.0" prefWidth="292.0" promptText="Password" />
       <JFXButton fx:id="logInButton" buttonType="RAISED" layoutX="308.0" layoutY="281.0" onAction="#login" prefHeight="45.0" prefWidth="123.0" ripplerFill="#3fb4ea" style="-fx-background-color: #3fb4ea;" text="Log in">

@@ -12,6 +12,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -25,6 +28,11 @@ public class LoginController {
     private JFXPasswordField passwordField;
     @FXML
     private JFXButton logInButton;
+
+    @FXML
+    private Label message;
+
+    private Color greenColor = Color.GREEN;
 
     private Session session = Session.getInstance();
     private AuthenticationManager authenticationManager;
@@ -65,6 +73,8 @@ public class LoginController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        message.setText("New Teacher has successfully registered");
+        message.setTextFill(greenColor);
     }
 
     public void registerStudent(ActionEvent actionEvent) {
@@ -79,6 +89,8 @@ public class LoginController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        message.setText("New Student has successfully registered");
+        message.setTextFill(greenColor);
     }
 
     public void goToTeachersView(Stage stage, User user) {
