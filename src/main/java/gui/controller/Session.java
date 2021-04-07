@@ -35,7 +35,7 @@ public class Session extends TimerTask {
             @Override
             public void run() {
                 try {
-                    Parent root = FXMLLoader.load(getClass().getResource("/view/login.fxml"));
+                    Parent root = FXMLLoader.load(getClass().getResource("/view/Login.fxml"));
                     Scene scene = new Scene(root);
                     stage.setScene(scene);
                 } catch (IOException ioException) {

@@ -55,7 +55,7 @@ public class LoginController {
 
     public void registerTeacher(ActionEvent actionEvent) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/register/registerTeacher.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/register/RegisterTeacher.fxml"));
             Parent root = fxmlLoader.load();
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
@@ -69,7 +69,7 @@ public class LoginController {
 
     public void registerStudent(ActionEvent actionEvent) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/register/registerStudent.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/register/RegisterStudent.fxml"));
             Parent root = fxmlLoader.load();
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
@@ -84,7 +84,7 @@ public class LoginController {
     public void goToTeachersView(Stage stage, User user) {
         session.startSession(user, stage);
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/userpage/teacherPage.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/userpage/TeacherPage.fxml"));
             Parent root = fxmlLoader.load();
             stage.setScene(new Scene(root));
 
@@ -96,7 +96,7 @@ public class LoginController {
     public void goToStudentsView(Stage stage, User user) {
         session.startSession(user, stage);
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/userpage/studentPage.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/userpage/StudentPage.fxml"));
             Parent root = fxmlLoader.load();
             stage.setScene(new Scene(root));
 

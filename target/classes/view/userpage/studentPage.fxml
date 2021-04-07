@@ -50,7 +50,7 @@
       </HBox>
    </top>
    <left>
-      <VBox alignment="TOP_CENTER" prefHeight="531.0" prefWidth="185.0" style="-fx-background-color: #e6f2f5;" BorderPane.alignment="CENTER">
+      <VBox alignment="TOP_CENTER" prefHeight="531.0" prefWidth="185.0" spacing="10.0" style="-fx-background-color: #e6f2f5;" BorderPane.alignment="CENTER">
          <VBox alignment="CENTER">
             <children>
                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Class:">
@@ -71,6 +71,7 @@
                <ChoiceBox fx:id="choiceMonth" prefWidth="150.0" />
             </children>
          </VBox>
+         <VBox alignment="CENTER" />
       </VBox>
    </left>
    <center>
@@ -88,10 +89,6 @@
       </VBox>
    </center>
    <bottom>
-      <HBox alignment="CENTER_RIGHT" BorderPane.alignment="CENTER">
-         <children>
-            <HBox alignment="BOTTOM_RIGHT" />
-         </children>
-      </HBox>
+      <HBox alignment="CENTER_LEFT" style="-fx-background-color: #e6f2f5;" BorderPane.alignment="CENTER" />
    </bottom>
 </BorderPane>
