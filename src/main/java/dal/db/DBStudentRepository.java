@@ -61,7 +61,7 @@ public class DBStudentRepository implements IStudentRepository {
     }
 
     @Override
-    public void registerStudent(String firstName, String lastName, String email, String password) {
+    public boolean registerStudent(String firstName, String lastName, String email, String password) {
         try (Connection con = connection.getConnection()) {
             String sql = "INSERT INTO Student Values(?,?,?,?)";
             PreparedStatement statement = con.prepareStatement(sql);
@@ -70,8 +70,10 @@ public class DBStudentRepository implements IStudentRepository {
             statement.setString(3, email);
             statement.setString(4, password);
             statement.execute();
+            return true;
         } catch (SQLException ex) {
             //TODO
         }
+        return false;
     }
 }

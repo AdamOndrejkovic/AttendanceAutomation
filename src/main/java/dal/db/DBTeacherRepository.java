@@ -1,6 +1,5 @@
 package dal.db;
 
-import be.user.Student;
 import be.user.Teacher;
 import dal.ITeacherRepository;
 
@@ -62,7 +61,7 @@ public class DBTeacherRepository implements ITeacherRepository {
     }
 
     @Override
-    public void registerTeacher(String firstName, String lastName, String email, String password) {
+    public boolean registerTeacher(String firstName, String lastName, String email, String password) {
         try (Connection con = connection.getConnection()) {
             String sql = "INSERT INTO Teacher Values(?,?,?,?)";
             PreparedStatement statement = con.prepareStatement(sql);
@@ -71,8 +70,10 @@ public class DBTeacherRepository implements ITeacherRepository {
             statement.setString(3, email);
             statement.setString(4, password);
             statement.execute();
+            return true;
         } catch (SQLException ex) {
             //TODO
         }
+        return false;
     }
 }
