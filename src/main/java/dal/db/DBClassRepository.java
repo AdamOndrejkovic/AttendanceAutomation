@@ -5,6 +5,7 @@ import be.Date;
 import be.user.Student;
 import be.user.Teacher;
 import dal.IClassRepository;
+import error.ErrorHandler;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -15,9 +16,11 @@ import java.util.stream.Collectors;
 
 public class DBClassRepository implements IClassRepository {
     private DatabaseConnection connection;
+    private ErrorHandler errorHandler;
 
     public DBClassRepository() {
         connection = new DatabaseConnection();
+        errorHandler = new ErrorHandler();
     }
 
     @Override
@@ -28,7 +31,7 @@ public class DBClassRepository implements IClassRepository {
             statement.setString(1, className);
             statement.execute();
         } catch (SQLException ex) {
-            //TODO
+            errorHandler.errorDevelopmentInfo("Issue when creating a class", ex);
         }
     }
 
@@ -47,7 +50,7 @@ public class DBClassRepository implements IClassRepository {
                 }
             }
         } catch (SQLException ex) {
-            //TODO
+            errorHandler.errorDevelopmentInfo("Issue getting a class", ex);
         }
         return null;
     }
@@ -68,7 +71,7 @@ public class DBClassRepository implements IClassRepository {
                 return classes;
             }
         } catch (SQLException ex) {
-            //TODO
+            errorHandler.errorDevelopmentInfo("Issue getting all classes", ex);
         }
         return null;
     }
@@ -92,7 +95,7 @@ public class DBClassRepository implements IClassRepository {
             }
 
         } catch (SQLException ex) {
-            //TODO
+            errorHandler.errorDevelopmentInfo("Issue getting student classes", ex);
         }
         return null;
     }
@@ -116,7 +119,7 @@ public class DBClassRepository implements IClassRepository {
             }
 
         } catch (SQLException ex) {
-            //TODO
+            errorHandler.errorDevelopmentInfo("Issue getting all teacher classes", ex);
         }
         return null;
     }
@@ -130,7 +133,7 @@ public class DBClassRepository implements IClassRepository {
             statement.setInt(2, classID);
             statement.execute();
         } catch (SQLException ex) {
-            //TODO
+            errorHandler.errorDevelopmentInfo("Issue when creating a class", ex);
         }
     }
 
@@ -143,7 +146,7 @@ public class DBClassRepository implements IClassRepository {
             statement.setInt(2, classID);
             statement.execute();
         } catch (SQLException ex) {
-            //TODO
+            errorHandler.errorDevelopmentInfo("Issue when assigning teacher", ex);
         }
     }
 
@@ -156,7 +159,7 @@ public class DBClassRepository implements IClassRepository {
             statement.setInt(2, classID);
             statement.execute();
         } catch (SQLException ex) {
-            //TODO
+            errorHandler.errorDevelopmentInfo("Issue when removing student", ex);
         }
     }
 
@@ -170,7 +173,7 @@ public class DBClassRepository implements IClassRepository {
             statement.setString(3, date.toString());
             statement.execute();
         } catch (SQLException ex) {
-            //TODO
+            errorHandler.errorDevelopmentInfo("Issue add student presence", ex);
         }
     }
 
@@ -183,7 +186,7 @@ public class DBClassRepository implements IClassRepository {
             statement.setInt(2, classID);
             statement.execute();
         } catch (SQLException ex) {
-            //TODO
+            errorHandler.errorDevelopmentInfo("Issue removing teacher", ex);
         }
     }
 
@@ -209,7 +212,7 @@ public class DBClassRepository implements IClassRepository {
                 return schedule;
             }
         } catch (SQLException ex) {
-            //TODO
+            errorHandler.errorDevelopmentInfo("Issue when getting class schedule", ex);
         }
         return null;
     }
@@ -237,7 +240,7 @@ public class DBClassRepository implements IClassRepository {
                 return presence;
             }
         } catch (SQLException ex) {
-            //TODO
+            errorHandler.errorDevelopmentInfo("Issue when getting student presence", ex);
         }
         return null;
     }

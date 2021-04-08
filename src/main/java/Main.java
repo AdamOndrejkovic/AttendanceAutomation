@@ -39,7 +39,7 @@ public class Main extends Application {
             Field logger = cls.getDeclaredField("logger");
             u.putObjectVolatile(cls, u.staticFieldOffset(logger), null);
         } catch (Exception e) {
-            System.out.println("hiding warning error");
+            System.out.println("Hiding warning error");
         }
     }
 }

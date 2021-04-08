@@ -33,31 +33,53 @@ public class LoginController {
     private Label message;
 
     private Color greenColor = Color.GREEN;
+    private Color redColor = Color.RED;
 
     private Session session = Session.getInstance();
     private AuthenticationManager authenticationManager;
 
-    public LoginController(){
+    public LoginController() {
         authenticationManager = new AuthenticationManager();
     }
+
     @FXML
     void login(ActionEvent event) {
         String username = usernameField.getText();
         String password = passwordField.getText();
 
+
+        if (username.isEmpty() || password.isEmpty()) {
+            if(username.isEmpty() && password.isEmpty()){
+                message.setText("You need to fill the blank fields");
+                message.setTextFill(redColor);
+            }else if(username.isEmpty()){
+                message.setText("Fill in the username");
+                message.setTextFill(redColor);
+            }else{
+                message.setText("Fill in the password");
+                message.setTextFill(redColor);
+            }
+
+        }else{
+            authenticateUser(username,password);
+        }
+
+
+    }
+
+    private void authenticateUser(String username, String password) {
         User user = (User) authenticationManager.checkCredintials(username, password);
-
-
         if (user != null) {
             Stage stage = (Stage) logInButton.getScene().getWindow();
 
             if (user instanceof Teacher) {
-                goToTeachersView(stage,user);
+                goToTeachersView(stage, user);
             } else if (user instanceof Student) {
-                goToStudentsView(stage,user);
+                goToStudentsView(stage, user);
             }
         } else {
-            Alert.displayAlert("Wrong Details!", "Entered Credentials are wrong!");
+            message.setText("Account not found!");
+            message.setTextFill(redColor);
         }
     }
 

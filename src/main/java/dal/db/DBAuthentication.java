@@ -47,8 +47,7 @@ public class DBAuthentication implements IAuthentication {
                 }
             }
         } catch (SQLException ex) {
-            errorHandler.handleErrorUser("Error occurred while checking your credintials. Please try again!");
-            errorHandler.errorDevelopmentInfo("Issue in Dao DB Authentication. " + ex);
+            errorHandler.errorDevelopmentInfo("Issue in Dao DB Authentication. ", ex);
         }
         return false;
     }
@@ -69,8 +68,7 @@ public class DBAuthentication implements IAuthentication {
                 }
             }
         } catch (SQLException ex) {
-            errorHandler.handleErrorUser("Error occurred while checking your credintials. Please try again!");
-            errorHandler.errorDevelopmentInfo("Issue in Dao DB Authentication. " + ex);
+            errorHandler.errorDevelopmentInfo("Issue in Dao DB Authentication. ", ex);
         }
         return false;
     }
@@ -92,8 +90,7 @@ public class DBAuthentication implements IAuthentication {
                 }
             }
         } catch (SQLException ex) {
-            errorHandler.handleErrorUser("Error occurred while loading your teacher account. Please try again!");
-            errorHandler.errorDevelopmentInfo("Issue in Dao DB Authentication. " + ex);
+            errorHandler.errorDevelopmentInfo("Issue in Dao DB Authentication. ", ex);
         }
         return null;
     }
@@ -115,8 +112,7 @@ public class DBAuthentication implements IAuthentication {
                 }
             }
         } catch (SQLException ex) {
-            errorHandler.handleErrorUser("Error occurred while loading your student account. Please try again!");
-            errorHandler.errorDevelopmentInfo("Issue in Dao DB Authentication. " + ex);
+            errorHandler.errorDevelopmentInfo("Issue in Dao DB Authentication. ", ex);
         }
         return null;
     }

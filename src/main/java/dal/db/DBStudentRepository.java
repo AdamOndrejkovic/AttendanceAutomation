@@ -2,6 +2,7 @@ package dal.db;
 
 import be.user.Student;
 import dal.IStudentRepository;
+import error.ErrorHandler;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -9,9 +10,11 @@ import java.util.List;
 
 public class DBStudentRepository implements IStudentRepository {
     private DatabaseConnection connection;
+    private ErrorHandler errorHandler;
 
     public DBStudentRepository() {
         connection = new DatabaseConnection();
+        errorHandler = new ErrorHandler();
     }
 
     @Override
@@ -31,7 +34,7 @@ public class DBStudentRepository implements IStudentRepository {
                 }
             }
         } catch (SQLException ex) {
-            //TODO
+            errorHandler.errorDevelopmentInfo("Issue getting a student", ex);
         }
         return null;
     }
@@ -55,7 +58,7 @@ public class DBStudentRepository implements IStudentRepository {
                 return students;
             }
         } catch (SQLException ex) {
-            //TODO
+            errorHandler.errorDevelopmentInfo("Issue getting all students", ex);
         }
         return null;
     }
@@ -72,18 +75,20 @@ public class DBStudentRepository implements IStudentRepository {
             statement.execute();
             return true;
         } catch (SQLException ex) {
-            //TODO
+            errorHandler.errorDevelopmentInfo("Issue registering a student", ex);
         }
         return false;
     }
 
     public void deleteStudentTest(String email, String password){
         try (Connection con = connection.getConnection()) {
-            String sql = "DELETE FROM Student WHERE  Email="+ email + "AND Password ="+ password;
+            String sql = "DELETE FROM Student WHERE  Email = ? AND Password = ?";
             PreparedStatement statement = con.prepareStatement(sql);
+            statement.setString(1,email);
+            statement.setString(2,password);
             statement.execute();
         } catch (SQLException ex) {
-            //TODO
+            errorHandler.errorDevelopmentInfo("Issue deleting a student", ex);
         }
     }
 }
