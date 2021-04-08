@@ -34,6 +34,7 @@ public class LoginController {
 
     private Color greenColor = Color.GREEN;
     private Color redColor = Color.RED;
+    private Color yellowColor = Color.YELLOW;
 
     private Session session = Session.getInstance();
     private AuthenticationManager authenticationManager;
@@ -61,6 +62,8 @@ public class LoginController {
             }
 
         }else{
+            message.setText("Please wait ...");
+            message.setTextFill(yellowColor);
             authenticateUser(username,password);
         }
 
