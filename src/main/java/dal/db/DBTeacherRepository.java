@@ -75,4 +75,14 @@ public class DBTeacherRepository implements ITeacherRepository {
             //TODO
         }
     }
+
+    public void deleteTeacherTest(String email, String password){
+        try (Connection con = connection.getConnection()) {
+            String sql = "DELETE FROM Teacher WHERE  Email="+ email + "AND Password ="+ password;
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.execute();
+        } catch (SQLException ex) {
+            //TODO
+        }
+    }
 }
