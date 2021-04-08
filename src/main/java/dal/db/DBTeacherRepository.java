@@ -2,6 +2,7 @@ package dal.db;
 
 import be.user.Teacher;
 import dal.ITeacherRepository;
+import error.ErrorHandler;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -9,9 +10,11 @@ import java.util.List;
 
 public class DBTeacherRepository implements ITeacherRepository {
     private DatabaseConnection connection;
+    private ErrorHandler errorHandler;
 
     public DBTeacherRepository() {
         connection = new DatabaseConnection();
+        errorHandler = new ErrorHandler();
     }
 
     @Override
@@ -31,7 +34,7 @@ public class DBTeacherRepository implements ITeacherRepository {
                 }
             }
         } catch (SQLException ex) {
-            //TODO
+            errorHandler.errorDevelopmentInfo("Issue getting a teacher", ex);
         }
         return null;
     }
@@ -55,7 +58,7 @@ public class DBTeacherRepository implements ITeacherRepository {
                 return teachers;
             }
         } catch (SQLException ex) {
-            //TODO
+            errorHandler.errorDevelopmentInfo("Issue getting all teachers", ex);
         }
         return null;
     }
@@ -72,18 +75,20 @@ public class DBTeacherRepository implements ITeacherRepository {
             statement.execute();
             return true;
         } catch (SQLException ex) {
-            //TODO
+            errorHandler.errorDevelopmentInfo("Issue registering a teacher", ex);
         }
         return false;
     }
 
     public void deleteTeacherTest(String email, String password){
         try (Connection con = connection.getConnection()) {
-            String sql = "DELETE FROM Teacher WHERE  Email="+ email + "AND Password ="+ password;
+            String sql = "DELETE FROM Teacher WHERE  Email= ? AND Password = ?";
             PreparedStatement statement = con.prepareStatement(sql);
+            statement.setString(1,email);
+            statement.setString(2,password);
             statement.execute();
         } catch (SQLException ex) {
-            //TODO
+            errorHandler.errorDevelopmentInfo("Issue deleting a teacher", ex);
         }
     }
 }

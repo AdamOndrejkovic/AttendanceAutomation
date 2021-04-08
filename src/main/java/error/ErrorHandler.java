@@ -6,7 +6,9 @@ public class ErrorHandler {
         System.out.println(message);
     }
 
-    public void errorDevelopmentInfo(String message) {
+    public void errorDevelopmentInfo(String message, Exception exception) {
         System.out.println(message);
+        System.out.println();
+        System.out.println(exception);
     }
 }
