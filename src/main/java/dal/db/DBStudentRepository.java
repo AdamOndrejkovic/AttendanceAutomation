@@ -87,7 +87,6 @@ public class DBStudentRepository implements IStudentRepository {
             statement.setString(1,email);
             statement.setString(2,password);
             statement.execute();
-            System.out.println("done");
         } catch (SQLException ex) {
             errorHandler.errorDevelopmentInfo("Issue deleting a student", ex);
         }
