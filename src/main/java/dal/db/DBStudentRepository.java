@@ -76,4 +76,14 @@ public class DBStudentRepository implements IStudentRepository {
         }
         return false;
     }
+
+    public void deleteStudentTest(String email, String password){
+        try (Connection con = connection.getConnection()) {
+            String sql = "DELETE FROM Student WHERE  Email="+ email + "AND Password ="+ password;
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.execute();
+        } catch (SQLException ex) {
+            //TODO
+        }
+    }
 }
