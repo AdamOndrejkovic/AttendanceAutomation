@@ -1,4 +1,5 @@
 utility\Months.class
+gui\controller\TeacherPageController.class
 Main.class
 bll\StatisticsManager.class
 bll\LoginManager.class

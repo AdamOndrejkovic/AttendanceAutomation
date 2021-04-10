@@ -3,20 +3,20 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXPasswordField?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.control.Label?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controller.LoginController">
    <Pane layoutX="14.0" layoutY="14.0" prefHeight="370.0" prefWidth="570.0" style="-fx-background-color: white;">
       <effect>
          <DropShadow blurType="GAUSSIAN" />
       </effect>
-      <Label fx:id="message" layoutX="139.0" layoutY="100.0"/>
+      <Label fx:id="message" layoutX="139.0" layoutY="118.0" prefHeight="17.0" prefWidth="292.0" />
       <JFXTextField fx:id="usernameField" layoutX="139.0" layoutY="141.0" prefHeight="36.0" prefWidth="292.0" promptText="Username" />
       <JFXPasswordField fx:id="passwordField" focusColor="#36657c" layoutX="139.0" layoutY="209.0" prefHeight="36.0" prefWidth="292.0" promptText="Password" />
       <JFXButton fx:id="logInButton" buttonType="RAISED" layoutX="308.0" layoutY="281.0" onAction="#login" prefHeight="45.0" prefWidth="123.0" ripplerFill="#3fb4ea" style="-fx-background-color: #3fb4ea;" text="Log in">
@@ -24,10 +24,10 @@
             <Font size="20.0" />
          </font>
       </JFXButton>
-      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="186.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="84.0" fitWidth="308.0" layoutX="131.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
          <Image url="@../images/EASV-logo-EN.png" />
       </ImageView>
-      <JFXButton layoutX="139.0" layoutY="279.0" onAction="#registerTeacher" text="Register as new teacher" />
-      <JFXButton layoutX="139.0" layoutY="303.0" onAction="#registerStudent" text="Register as new student" />
+      <JFXButton layoutX="129.0" layoutY="279.0" onAction="#registerTeacher" prefHeight="25.0" prefWidth="142.0" text="Register as new teacher" />
+      <JFXButton layoutX="130.0" layoutY="303.0" onAction="#registerStudent" text="Register as new student" />
    </Pane>
 </AnchorPane>
