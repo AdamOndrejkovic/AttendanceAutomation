@@ -3,6 +3,7 @@ package gui.controller;
 import be.Class;
 import be.Date;
 import bll.ClassManager;
+import gui.model.StudentModel;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -33,19 +34,23 @@ public class StudentPageController implements Initializable {
     @FXML
     private Text txtClass;
 
+    private StudentModel studentModel;
+
     private Calendar calendar = Calendar.getInstance(Locale.GERMANY);
-    private Session session = Session.getInstance();
-    private ClassManager classManager = new ClassManager();
 
     @FXML
     private TilePane tileCalendar;
     @FXML
     private Text textMonth;
 
+    public StudentPageController() {
+        studentModel = new StudentModel();
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        choiceClass.setItems(FXCollections.observableList(classManager.getAllStudentClasses(session.getUser().getId())));
-        txtFullName.setText(session.getUser().getFirstName()+" "+session.getUser().getLastName());
+        choiceClass.setItems(FXCollections.observableList(studentModel.getAllStudentClasses()));
+        txtFullName.setText(Session.getInstance().getUser().getFirstName() + " " + Session.getInstance().getUser().getLastName());
         choiceMonth.setItems(FXCollections.observableList(Months.getValues()));
 
         choiceClass.setOnAction(actionEvent -> {
@@ -62,8 +67,10 @@ public class StudentPageController implements Initializable {
     }
 
     private void loadCalendar() {
-        List<String> schedule = classManager.getClassScheduleAsStringList(choiceClass.getValue().getId());
-        List<String> presence = classManager.getStudentPresenceAsStringList(session.getUser().getId(),choiceClass.getValue().getId());
+        int classID = choiceClass.getValue().getId();
+
+        List<String> schedule = studentModel.getClassSchedule(classID).stream().map(Date::toString).collect(Collectors.toList());
+        List<String> presence = studentModel.getStudentPresence(classID).stream().map(Date::toString).collect(Collectors.toList());
 
         Date currentDate = new Date(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH));
 
@@ -96,7 +103,7 @@ public class StudentPageController implements Initializable {
                 if (schedule.contains(selectedDate.toString()) && !presence.contains(selectedDate.toString())) {
                     if (currentDate.getYear() == selectedDate.getYear() && currentDate.getMonth() == selectedDate.getMonth() && currentDate.getDay() == selectedDate.getDay()) {
                         vbox.setStyle("-fx-background-color: green");
-                        classManager.addStudentPresence(session.getUser().getId(),choiceClass.getValue().getId(),selectedDate);
+                        studentModel.addStudentPresence(classID,selectedDate);
                     }
                 }
             });

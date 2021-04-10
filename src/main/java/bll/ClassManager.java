@@ -47,4 +47,20 @@ public class ClassManager {
         return classRepository.getStudentPresence(studentID,classID).stream().map(Date::toString).collect(Collectors.toList());
     }
 
+    public List<Class> getAllTeacherClasses(int teacherID){
+        return classRepository.getAllTeacherClasses(teacherID);
+    }
+
+    public void deleteClassDate(int classID, Date date){
+        classRepository.deleteClassDate(classID,date);
+    }
+
+    public void addClassDate(int classID, Date date){
+        classRepository.addClassDate(classID,date);
+    }
+
+    public void editClassDate(int classID, Date oldDate,Date newDate){
+        classRepository.editClassDate(classID,oldDate,newDate);
+    }
+
 }
