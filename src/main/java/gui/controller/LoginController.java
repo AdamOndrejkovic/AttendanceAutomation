@@ -119,26 +119,26 @@ public class LoginController {
     }
 
     public void goToTeachersView(Stage stage, User user) {
-        session.startSession(user, stage);
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/userpage/TeacherPage.fxml"));
             Parent root = fxmlLoader.load();
             stage.setScene(new Scene(root));
+            session.startSession(user, stage);
 
         } catch (IOException e) {
-            session.stopSession(stage);
+            e.printStackTrace();
         }
     }
 
     public void goToStudentsView(Stage stage, User user) {
-        session.startSession(user, stage);
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/userpage/StudentPage.fxml"));
             Parent root = fxmlLoader.load();
             stage.setScene(new Scene(root));
+            session.startSession(user, stage);
 
         } catch (IOException e) {
-            session.stopSession(stage);
+            e.printStackTrace();
         }
     }
 }
