@@ -40,13 +40,6 @@ public class ClassManager {
         classRepository.addStudentPresence(studentID,classID,date);
     }
 
-    public List<String> getClassScheduleAsStringList(int classID){
-        return classRepository.getClassSchedule(classID).stream().map(Date::toString).collect(Collectors.toList());
-    }
-    public List<String> getStudentPresenceAsStringList(int studentID, int classID){
-        return classRepository.getStudentPresence(studentID,classID).stream().map(Date::toString).collect(Collectors.toList());
-    }
-
     public List<Class> getAllTeacherClasses(int teacherID){
         return classRepository.getAllTeacherClasses(teacherID);
     }

@@ -2,25 +2,21 @@ package gui.controller;
 
 import be.Class;
 import be.Date;
-import bll.ClassManager;
 import gui.model.StudentModel;
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import utility.Months;
+import utility.Calendar;
 
 import java.net.URL;
 
-import java.time.Month;
-import java.time.YearMonth;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -28,15 +24,13 @@ public class StudentPageController implements Initializable {
     @FXML
     private ChoiceBox<Class> choiceClass;
     @FXML
-    private ChoiceBox<String> choiceMonth;
+    private ChoiceBox<Months> choiceMonth;
     @FXML
     private Text txtFullName;
     @FXML
     private Text txtClass;
 
     private StudentModel studentModel;
-
-    private Calendar calendar = Calendar.getInstance(Locale.GERMANY);
 
     @FXML
     private TilePane tileCalendar;
@@ -49,9 +43,9 @@ public class StudentPageController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        choiceClass.setItems(FXCollections.observableList(studentModel.getAllStudentClasses()));
+        choiceClass.setItems(studentModel.getClassOverview());
         txtFullName.setText(Session.getInstance().getUser().getFirstName() + " " + Session.getInstance().getUser().getLastName());
-        choiceMonth.setItems(FXCollections.observableList(Months.getValues()));
+        choiceMonth.setItems(FXCollections.observableList(Arrays.asList(Months.values())));
 
         choiceClass.setOnAction(actionEvent -> {
             txtClass.setText(choiceClass.getValue().getName());
@@ -68,29 +62,26 @@ public class StudentPageController implements Initializable {
 
     private void loadCalendar() {
         int classID = choiceClass.getValue().getId();
+        int selectedMonth = choiceMonth.getValue().getValue();
 
         List<String> schedule = studentModel.getClassSchedule(classID).stream().map(Date::toString).collect(Collectors.toList());
         List<String> presence = studentModel.getStudentPresence(classID).stream().map(Date::toString).collect(Collectors.toList());
 
-        Date currentDate = new Date(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH));
-
-        int selectedMonthDays = YearMonth.of(calendar.get(Calendar.YEAR), Month.valueOf(choiceMonth.getValue().toUpperCase()).getValue()).lengthOfMonth() + 1;
-
         if (!tileCalendar.getChildren().isEmpty()) {
             tileCalendar.getChildren().clear();
         }
-        for (int i = 1; i < selectedMonthDays; i++) {
+        for (int i = 1; i < Calendar.getDaysInMonth(Calendar.getYear(),selectedMonth); i++) {
             VBox vbox = new VBox();
             Label label = new Label(String.valueOf(i));
 
-            Date loadedDate = new Date(calendar.get(Calendar.YEAR), Month.valueOf(choiceMonth.getValue().toUpperCase()).getValue(), i);
+            Date loadedDate = new Date(Calendar.getYear(), selectedMonth, i);
 
             if (schedule.contains(loadedDate.toString())) {
-                if ((loadedDate.getMonth() < currentDate.getMonth() || loadedDate.getMonth() == currentDate.getMonth() && loadedDate.getDay() <= currentDate.getDay()) & presence.contains(loadedDate.toString())) {
+                if ((loadedDate.getMonth() < Calendar.getMonth() || loadedDate.getMonth() == Calendar.getMonth() && loadedDate.getDay() <= Calendar.getDay()) & presence.contains(loadedDate.toString())) {
                     vbox.setStyle("-fx-background-color: green");
-                } else if ((loadedDate.getMonth() < currentDate.getMonth() || loadedDate.getMonth() == currentDate.getMonth() && loadedDate.getDay() < currentDate.getDay()) & !presence.contains(loadedDate.toString())) {
+                } else if ((loadedDate.getMonth() < Calendar.getMonth() || loadedDate.getMonth() == Calendar.getMonth() && loadedDate.getDay() < Calendar.getDay()) & !presence.contains(loadedDate.toString())) {
                     vbox.setStyle("-fx-background-color: red");
-                } else if (loadedDate.getMonth() == currentDate.getMonth() && loadedDate.getDay() == currentDate.getDay()) {
+                } else if (loadedDate.getMonth() == Calendar.getMonth() && loadedDate.getDay() == Calendar.getDay()) {
                     vbox.setStyle("-fx-background-color: yellow;-fx-border-color: black;-fx-border-width: 1;");
                 } else {
                     vbox.setStyle("-fx-background-color: yellow");
@@ -98,10 +89,10 @@ public class StudentPageController implements Initializable {
             }
 
             vbox.setOnMouseClicked(mouseEvent -> {
-                Date selectedDate = new Date(calendar.get(Calendar.YEAR), Month.valueOf(choiceMonth.getValue().toUpperCase()).getValue(), Integer.parseInt(label.getText()));
+                Date selectedDate = new Date(Calendar.getYear(), selectedMonth, Integer.parseInt(label.getText()));
 
                 if (schedule.contains(selectedDate.toString()) && !presence.contains(selectedDate.toString())) {
-                    if (currentDate.getYear() == selectedDate.getYear() && currentDate.getMonth() == selectedDate.getMonth() && currentDate.getDay() == selectedDate.getDay()) {
+                    if (Calendar.getYear() == selectedDate.getYear() && Calendar.getMonth() == selectedDate.getMonth() && Calendar.getDay() == selectedDate.getDay()) {
                         vbox.setStyle("-fx-background-color: green");
                         studentModel.addStudentPresence(classID,selectedDate);
                     }
@@ -111,7 +102,7 @@ public class StudentPageController implements Initializable {
             vbox.getChildren().add(new Label(String.valueOf(i)));
             vbox.setAlignment(Pos.CENTER);
             tileCalendar.getChildren().add(vbox);
-            textMonth.setText(choiceMonth.getValue());
+            textMonth.setText(choiceMonth.getValue().toString());
         }
     }
 }

@@ -1,6 +1,3 @@
-import be.Date;
-import bll.ClassManager;
-import dal.db.DBClassRepository;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -8,10 +5,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import sun.misc.Unsafe;
 
-import java.io.*;
 import java.lang.reflect.Field;
-import java.sql.SQLException;
-import java.util.ArrayList;
 
 public class Main extends Application {
 
@@ -26,7 +20,6 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
-
         launch(args);
     }
 
@@ -43,6 +36,3 @@ public class Main extends Application {
         }
     }
 }
-
-
-//test

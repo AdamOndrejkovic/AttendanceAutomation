@@ -9,11 +9,12 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import utility.Calendar;
 
 import java.util.concurrent.atomic.AtomicReference;
 
 public class EditDate {
-    public static Date editDate(Date cDate) {
+    public static Date editDate(Date date) {
         AtomicReference<Date> editedDate = new AtomicReference<>();
         Stage stage = new Stage();
 
@@ -25,8 +26,9 @@ public class EditDate {
                 int year = datePicker.getValue().getYear();
                 int month = datePicker.getValue().getMonthValue();
                 int day = datePicker.getValue().getDayOfMonth();
-                if (cDate.getYear() != year || cDate.getMonth() != month || cDate.getDay() != day) {
-                    if (year >= cDate.getYear() && month >= cDate.getMonth() && day >= cDate.getDay()) {
+                if (date.getYear() != year || date.getMonth() != month || date.getDay() != day) {
+
+                    if (year >= Calendar.getYear() && month >= Calendar.getMonth() && day >= Calendar.getDay()) {
                         editedDate.set(new Date(year, month, day));
                         stage.close();
                     }
@@ -34,7 +36,7 @@ public class EditDate {
             }
         });
 
-        VBox vbox = new VBox(new Label("Selected: " + " > " + cDate + " < "), new Label("Edited Date: "), datePicker, button);
+        VBox vbox = new VBox(new Label("Selected: " + " > " + date + " < "), new Label("Edited Date: "), datePicker, button);
         vbox.setAlignment(Pos.TOP_CENTER);
         vbox.setSpacing(10);
 

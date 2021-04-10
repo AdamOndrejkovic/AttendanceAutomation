@@ -13,6 +13,7 @@ import javafx.scene.text.Text;
 import utility.Months;
 
 import java.net.URL;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -27,7 +28,7 @@ public class TeacherPageController implements Initializable {
     @FXML
     private ListView<Date> scheduleListView;
     @FXML
-    private ChoiceBox<String> choiceMonth;
+    private ChoiceBox<Months> choiceMonth;
     @FXML
     private Text txtFullName;
     @FXML
@@ -44,7 +45,7 @@ public class TeacherPageController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         classListView.setItems(teacherModel.getClassOverview());
-        choiceMonth.setItems(FXCollections.observableList(Months.getValues()));
+        choiceMonth.setItems(FXCollections.observableList(Arrays.asList(Months.values())));
         txtFullName.setText(Session.getInstance().getUser().getFirstName() + " " + Session.getInstance().getUser().getLastName());
         classListView.getSelectionModel().selectedItemProperty().addListener(observable -> {
             teacherModel.updateStudentsOverview();

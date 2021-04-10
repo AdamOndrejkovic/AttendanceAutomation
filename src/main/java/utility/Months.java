@@ -1,33 +1,31 @@
 package utility;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 public enum Months {
-    January,
-    February,
-    March,
-    April,
-    May,
-    June,
-    July,
-    August,
-    September,
-    October,
-    November,
-    December;
+    January(1),
+    February(2),
+    March(3),
+    April(4),
+    May(5),
+    June(6),
+    July(7),
+    August(8),
+    September(9),
+    October(10),
+    November(11),
+    December(12);
 
-    private static final List<String> VALUES;
+    private int value;
 
-    static {
-        VALUES = new ArrayList<>();
-        for (Months month : Months.values()) {
-            VALUES.add(month.name());
-        }
+    Months(int value) {
+        this.value = value;
     }
 
-    public static List<String> getValues() {
-        return Collections.unmodifiableList(VALUES);
+    public int getValue(){
+        return value;
+    }
+
+    @Override
+    public String toString() {
+        return name();
     }
 }

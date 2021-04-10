@@ -8,6 +8,7 @@ gui\controller\StudentPageController.class
 gui\model\TeacherModel.class
 gui\controller\Alert.class
 gui\controller\RegisterStudentController.class
+utility\Calendar.class
 gui\controller\RegisterTeacherController.class
 gui\controller\LoginController.class
 gui\model\StudentModel.class
