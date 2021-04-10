@@ -6,6 +6,7 @@ import be.user.Student;
 import be.user.Teacher;
 import dal.IClassRepository;
 import error.ErrorHandler;
+import gui.controller.Alert;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -109,10 +110,10 @@ public class DBClassRepository implements IClassRepository {
             PreparedStatement statement = con.prepareStatement(sql);
             statement.setInt(1, teacherID);
 
-            if (statement.execute(sql)) {
+            if (statement.execute()) {
                 ResultSet resultSet = statement.getResultSet();
                 while (resultSet.next()) {
-                    classes.add(new Class(resultSet.getInt("ID"),
+                    classes.add(new Class(resultSet.getInt("ClassID"),
                             resultSet.getString("ClassName")));
                 }
                 return classes;
@@ -172,7 +173,9 @@ public class DBClassRepository implements IClassRepository {
             statement.setInt(2, classID);
             statement.setString(3, date.toString());
             statement.execute();
+            Alert.displayAlert("Student Class","Attendance successfully submitted!");
         } catch (SQLException ex) {
+            Alert.displayAlert("Student Class","Failed to submit Attendance!");
             errorHandler.errorDevelopmentInfo("Issue add student presence", ex);
         }
     }
@@ -187,6 +190,51 @@ public class DBClassRepository implements IClassRepository {
             statement.execute();
         } catch (SQLException ex) {
             errorHandler.errorDevelopmentInfo("Issue removing teacher", ex);
+        }
+    }
+
+    @Override
+    public void deleteClassDate(int classID, Date date) {
+        try (Connection con = connection.getConnection()) {
+            String sql = "DELETE FROM ClassSchedule WHERE ClassID = ? AND ClassDate = ?";
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setInt(1, classID);
+            statement.setString(2, date.toString());
+            statement.execute();
+            Alert.displayAlert("Class Date","Class date has been successfully deleted!");
+        } catch (SQLException ex) {
+            errorHandler.errorDevelopmentInfo("Issue deleting date", ex);
+        }
+    }
+
+    @Override
+    public void editClassDate(int classID, Date oldDate,Date newDate) {
+        try (Connection con = connection.getConnection()) {
+            String sql = "UPDATE ClassSchedule SET ClassDate = ? WHERE ClassID = ? AND ClassDate = ?";
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setString(1, newDate.toString());
+            statement.setInt(2, classID);
+            statement.setString(3, oldDate.toString());
+            statement.execute();
+            Alert.displayAlert("Class Date","Class date has been successfully changed!");
+        } catch (SQLException ex) {
+            Alert.displayAlert("Class Date","Error changing date!");
+            errorHandler.errorDevelopmentInfo("Issue adding date", ex);
+        }
+    }
+
+    @Override
+    public void addClassDate(int classID, Date date) {
+        try (Connection con = connection.getConnection()) {
+            String sql = "INSERT INTO ClassSchedule VALUES(?,?)";
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setInt(1, classID);
+            statement.setString(2, date.toString());
+            statement.execute();
+            Alert.displayAlert("Class Date","Class date has been successfully added!");
+        } catch (SQLException ex) {
+            Alert.displayAlert("Class Date","Error adding date!");
+            errorHandler.errorDevelopmentInfo("Issue adding date", ex);
         }
     }
 

@@ -1,6 +1,7 @@
 package bll;
 
 import be.Class;
+import be.user.Student;
 import dal.IStudentRepository;
 import dal.db.DBStudentRepository;
 
@@ -11,5 +12,10 @@ public class StudentManager {
 
     public StudentManager() {
         studentRepository = new DBStudentRepository();
+    }
+
+
+    public List<Student> getClassStudents(int classID) {
+        return studentRepository.getClassStudents(classID);
     }
 }

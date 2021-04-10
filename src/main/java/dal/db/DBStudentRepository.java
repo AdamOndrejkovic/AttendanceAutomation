@@ -62,7 +62,31 @@ public class DBStudentRepository implements IStudentRepository {
         }
         return null;
     }
+    public List<Student> getClassStudents(int classID) {
+        List<Student> students = new ArrayList<>();
 
+        try (Connection con = connection.getConnection()) {
+            String sql = "SELECT ID,FirstName,LastName,Email FROM Student INNER JOIN StudentClass ON ID = StudentID WHERE ClassID = ?";
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setInt(1, classID);
+
+            if (statement.execute()) {
+                ResultSet resultSet = statement.getResultSet();
+                while (resultSet.next()) {
+                    students.add(new Student(
+                            resultSet.getString("FirstName"),
+                            resultSet.getString("LastName"),
+                            resultSet.getString("Email"),
+                            resultSet.getInt("ID")));
+                }
+                return students;
+            }
+
+        } catch (SQLException ex) {
+            errorHandler.errorDevelopmentInfo("Issue getting all students", ex);
+        }
+        return null;
+    }
     @Override
     public boolean registerStudent(String firstName, String lastName, String email, String password) {
         try (Connection con = connection.getConnection()) {

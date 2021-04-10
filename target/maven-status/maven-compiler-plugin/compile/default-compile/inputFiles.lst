@@ -8,7 +8,8 @@ C:\Users\Faust\IdeaProjects\AttendanceAutomation\src\main\java\bll\RegisterManag
 C:\Users\Faust\IdeaProjects\AttendanceAutomation\src\main\java\gui\controller\TeacherPageController.java
 C:\Users\Faust\IdeaProjects\AttendanceAutomation\src\main\java\dal\IAuthentication.java
 C:\Users\Faust\IdeaProjects\AttendanceAutomation\src\main\java\bll\StudentManager.java
-C:\Users\Faust\IdeaProjects\AttendanceAutomation\src\main\java\bll\LoginManager.java
+C:\Users\Faust\IdeaProjects\AttendanceAutomation\src\main\java\gui\model\StudentModel.java
+C:\Users\Faust\IdeaProjects\AttendanceAutomation\src\main\java\gui\model\TeacherModel.java
 C:\Users\Faust\IdeaProjects\AttendanceAutomation\src\main\java\be\Class.java
 C:\Users\Faust\IdeaProjects\AttendanceAutomation\src\main\java\dal\IStudentRepository.java
 C:\Users\Faust\IdeaProjects\AttendanceAutomation\src\main\java\utility\Months.java
@@ -20,6 +21,7 @@ C:\Users\Faust\IdeaProjects\AttendanceAutomation\src\main\java\gui\controller\Re
 C:\Users\Faust\IdeaProjects\AttendanceAutomation\src\main\java\be\Date.java
 C:\Users\Faust\IdeaProjects\AttendanceAutomation\src\main\java\bll\AuthenticationManager.java
 C:\Users\Faust\IdeaProjects\AttendanceAutomation\src\main\java\gui\controller\Alert.java
+C:\Users\Faust\IdeaProjects\AttendanceAutomation\src\main\java\gui\controller\EditDate.java
 C:\Users\Faust\IdeaProjects\AttendanceAutomation\src\main\java\gui\controller\RegisterTeacherController.java
 C:\Users\Faust\IdeaProjects\AttendanceAutomation\src\main\java\dal\IClassRepository.java
 C:\Users\Faust\IdeaProjects\AttendanceAutomation\src\main\java\dal\db\DBClassRepository.java

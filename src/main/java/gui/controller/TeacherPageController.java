@@ -1,78 +1,96 @@
 package gui.controller;
+
 import be.Class;
 import be.Date;
 import be.user.Student;
+import gui.model.TeacherModel;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.*;
 import javafx.scene.text.Text;
+import utility.Months;
 
-import javax.swing.*;
-import java.awt.*;
-import java.io.FileNotFoundException;
 import java.net.URL;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Calendar;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class TeacherPageController implements Initializable {
     @FXML
-    private ListView<Class> classListTable;
-
-    @FXML
-    private Text lblTotalPercentage;
-    @FXML
     private DatePicker datePicker;
     @FXML
-    private Text lblMissedClassCount;
+    private ListView<Class> classListView;
     @FXML
-    private Text lblNotAttendedAtAll;
+    private ListView<Student> studentListView;
+    @FXML
+    private ListView<Date> scheduleListView;
+    @FXML
+    private ChoiceBox<String> choiceMonth;
+    @FXML
+    private Text txtFullName;
+    @FXML
+    private Text txtClass;
 
-    static String newName, newSurName, newEMail; //For creating new student in popup window
+    private TeacherModel teacherModel;
+
+    private Calendar calendar = Calendar.getInstance(Locale.GERMANY);
 
     public TeacherPageController() {
+        teacherModel = new TeacherModel();
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        setAllStudentList();
-        setAllClasses();
-    }
-
-    private void setAllStudentList() {
-    }
-
-    private void setAllClasses(){
-
-    }
-
-    @FXML
-    private void btnEditStudentsInfo() {
-    }
-
-    @FXML
-    private void btnDeleteStudent(){
-    }
-
-    @FXML
-    private void btnEditClass() {
-    }
-
-    @FXML
-    private void btnDeleteClass() {
+        classListView.setItems(teacherModel.getClassOverview());
+        choiceMonth.setItems(FXCollections.observableList(Months.getValues()));
+        txtFullName.setText(Session.getInstance().getUser().getFirstName() + " " + Session.getInstance().getUser().getLastName());
+        classListView.getSelectionModel().selectedItemProperty().addListener(observable -> {
+            teacherModel.updateStudentsOverview();
+            teacherModel.updateSheduleOverview(classListView.getSelectionModel().getSelectedItem().getId());
+            studentListView.setItems(teacherModel.getStudentsOverview());
+            scheduleListView.setItems(teacherModel.getSheduleOverview());
+            txtClass.setText(classListView.getSelectionModel().getSelectedItem().getName());
+        });
     }
 
     public void submitDate(ActionEvent actionEvent) {
-        int year = datePicker.getValue().getYear();
-        int month = datePicker.getValue().getMonthValue();
-        int day = datePicker.getValue().getDayOfMonth();
-        Date date = new Date(year,month,day);
+        if (classListView.getSelectionModel().getSelectedItem() != null && datePicker.getValue() != null) {
+            int year = datePicker.getValue().getYear();
+            int month = datePicker.getValue().getMonthValue();
+            int day = datePicker.getValue().getDayOfMonth();
+            Date currentDate = new Date(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH));
+
+            if (year >= currentDate.getYear() && month >= currentDate.getMonth() && day >= currentDate.getDay()) {
+                int classID = classListView.getSelectionModel().getSelectedItem().getId();
+                teacherModel.addClassDate(classID, new Date(year, month, day));
+            } else {
+                Alert.displayAlert("Class Date", "You can't add dates frome the past!");
+            }
+        } else {
+            Alert.displayAlert("Class Date", "Select class or pick date!");
+        }
+
+    }
+
+    public void deleteDate(ActionEvent actionEvent) {
+        if (classListView.getSelectionModel().getSelectedItem() != null && scheduleListView.getSelectionModel().getSelectedItem() != null) {
+            int classID = classListView.getSelectionModel().getSelectedItem().getId();
+            Date date = scheduleListView.getSelectionModel().getSelectedItem();
+            teacherModel.deleteClassDate(classID, date);
+        }
+    }
+
+    public void editDate(ActionEvent actionEvent) {
+        if (classListView.getSelectionModel().getSelectedItem() != null && scheduleListView.getSelectionModel().getSelectedItem() != null) {
+            Date selectedDate = scheduleListView.getSelectionModel().getSelectedItem();
+            Date editedDate = EditDate.editDate(selectedDate);
+
+            if (editedDate != null) {
+                int classID = classListView.getSelectionModel().getSelectedItem().getId();
+                teacherModel.editClassDate(classID, selectedDate, editedDate);
+            }
+        }
     }
 }
