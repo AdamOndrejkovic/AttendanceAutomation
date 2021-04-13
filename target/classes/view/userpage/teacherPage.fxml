@@ -54,6 +54,11 @@
    </top>
    <left>
       <VBox alignment="CENTER" prefHeight="507.0" prefWidth="405.0" spacing="10.0" style="-fx-background-color: #e6f2f5;" BorderPane.alignment="TOP_CENTER">
+         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Your Classes:">
+            <font>
+               <Font name="System Bold" size="25.0" />
+            </font>
+         </Text>
          <VBox alignment="CENTER">
             <children>
                <HBox alignment="CENTER" prefHeight="349.0" prefWidth="360.0">
