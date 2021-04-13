@@ -26,7 +26,7 @@ public class TeacherModel {
         studentManager = new StudentManager();
 
         classOverview = FXCollections.observableList(classManager.getAllTeacherClasses(session.getUser().getId()));
-        studentsOverview = FXCollections.observableList(new ArrayList<>());
+        studentsOverview = FXCollections.observableList(studentManager.getAllStudents());
         scheduleOverview = FXCollections.observableList(new ArrayList<>());
     }
 

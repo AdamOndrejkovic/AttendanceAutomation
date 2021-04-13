@@ -47,6 +47,8 @@ public class LoginController {
     void login(ActionEvent event) {
         String username = usernameField.getText();
         String password = passwordField.getText();
+        message.setText("Please wait ...");
+        message.setTextFill(yellowColor);
 
 
         if (username.isEmpty() || password.isEmpty()) {
