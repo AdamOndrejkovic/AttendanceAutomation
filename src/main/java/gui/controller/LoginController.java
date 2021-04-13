@@ -14,7 +14,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -71,7 +70,7 @@ public class LoginController {
     }
 
     private void authenticateUser(String username, String password) {
-        User user = (User) authenticationManager.checkCredintials(username, password);
+        User user = (User) authenticationManager.checkCredentials(username, password);
         if (user != null) {
             Stage stage = (Stage) logInButton.getScene().getWindow();
 
