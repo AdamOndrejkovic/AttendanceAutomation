@@ -11,9 +11,8 @@ public class AuthenticationManager {
     }
 
 
-    public Object checkCredintials(String username, String password) {
+    public Object checkCredentials(String username, String password) {
         return authentication.getAuthentication(username, password);
     }
-
 
 }
