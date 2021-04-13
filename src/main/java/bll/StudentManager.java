@@ -18,4 +18,9 @@ public class StudentManager {
     public List<Student> getClassStudents(int classID) {
         return studentRepository.getClassStudents(classID);
     }
+
+
+    public List<Student> getAllStudents() {
+        return studentRepository.getAllStudents();
+    }
 }

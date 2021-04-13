@@ -3,12 +3,15 @@ package gui.controller;
 import be.Class;
 import be.Date;
 import be.user.Student;
+import be.user.User;
 import gui.model.TeacherModel;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import utility.Months;
 
@@ -34,6 +37,21 @@ public class TeacherPageController implements Initializable {
     @FXML
     private Text txtClass;
 
+    @FXML
+    private TableView<Student> attendanceTable;
+
+    @FXML
+    private TableColumn<User, String> studentFirstName;
+
+    @FXML
+    private TableColumn<User, String> studentLastName;
+
+    @FXML
+    private TableColumn<User, String> studentEmail;
+
+    @FXML
+    private TableColumn<User, Double> studentAttendance;
+
     private TeacherModel teacherModel;
 
     private Calendar calendar = Calendar.getInstance(Locale.GERMANY);
@@ -45,15 +63,28 @@ public class TeacherPageController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         classListView.setItems(teacherModel.getClassOverview());
-        choiceMonth.setItems(FXCollections.observableList(Arrays.asList(Months.values())));
+        scheduleListView.setPlaceholder(new Label("Please select a class"));
+        scheduleListView.setMinWidth(125.00);
         txtFullName.setText(Session.getInstance().getUser().getFirstName() + " " + Session.getInstance().getUser().getLastName());
         classListView.getSelectionModel().selectedItemProperty().addListener(observable -> {
             teacherModel.updateStudentsOverview();
             teacherModel.updateSheduleOverview(classListView.getSelectionModel().getSelectedItem().getId());
-            studentListView.setItems(teacherModel.getStudentsOverview());
             scheduleListView.setItems(teacherModel.getSheduleOverview());
             txtClass.setText(classListView.getSelectionModel().getSelectedItem().getName());
         });
+
+
+        studentFirstName.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+        studentLastName.setCellValueFactory(new PropertyValueFactory<>("lastName"));
+        studentEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
+        attendanceTable.setItems(teacherModel.getStudentsOverview());
+        attendanceTable.getSelectionModel().selectedItemProperty().addListener((observableValue, student, t1) -> {
+            System.out.println(observableValue);
+            System.out.println(student);
+            System.out.println(t1);
+        });
+        //attendanceTable.setItems(teacherModel.getStudentsOverview());
+
     }
 
     public void submitDate(ActionEvent actionEvent) {
@@ -67,7 +98,7 @@ public class TeacherPageController implements Initializable {
                 int classID = classListView.getSelectionModel().getSelectedItem().getId();
                 teacherModel.addClassDate(classID, new Date(year, month, day));
             } else {
-                Alert.displayAlert("Class Date", "You can't add dates frome the past!");
+                Alert.displayAlert("Class Date", "You can't add dates from the past!");
             }
         } else {
             Alert.displayAlert("Class Date", "Select class or pick date!");
