@@ -104,6 +104,11 @@ public class DBStudentRepository implements IStudentRepository {
         return false;
     }
 
+    @Override
+    public int getStudentClass(int id){
+        return 1;
+    }
+
     public void deleteStudentTest(String email, String password){
         try (Connection con = connection.getConnection()) {
             String sql = "DELETE FROM Student WHERE  Email = ? AND Password = ?";

@@ -54,6 +54,8 @@ public class TeacherPageController implements Initializable {
 
     private TeacherModel teacherModel;
 
+    private int selectedClass;
+
     private Calendar calendar = Calendar.getInstance(Locale.GERMANY);
 
     public TeacherPageController() {
@@ -71,9 +73,12 @@ public class TeacherPageController implements Initializable {
             teacherModel.updateSheduleOverview(classListView.getSelectionModel().getSelectedItem().getId());
             scheduleListView.setItems(teacherModel.getSheduleOverview());
             txtClass.setText(classListView.getSelectionModel().getSelectedItem().getName());
+            selectedClass = classListView.getSelectionModel().getSelectedItem().getId();
         });
 
+        if(selectedClass > 0){
 
+        }
         studentFirstName.setCellValueFactory(new PropertyValueFactory<>("firstName"));
         studentLastName.setCellValueFactory(new PropertyValueFactory<>("lastName"));
         studentEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
