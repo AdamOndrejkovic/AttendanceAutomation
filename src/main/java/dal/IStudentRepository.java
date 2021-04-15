@@ -9,4 +9,5 @@ public interface IStudentRepository {
     List<Student> getAllStudents();
     List<Student> getClassStudents(int classID);
     boolean registerStudent(String firstName, String lastName, String email, String password);
+    int getStudentClass(int id);
 }
