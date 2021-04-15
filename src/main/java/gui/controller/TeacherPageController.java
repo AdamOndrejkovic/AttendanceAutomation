@@ -50,7 +50,7 @@ public class TeacherPageController implements Initializable {
     private TableColumn<User, String> studentEmail;
 
     @FXML
-    private TableColumn<User, Double> studentAttendance;
+    private TableColumn<Student, Double> studentAttendance;
 
     private TeacherModel teacherModel;
 
@@ -74,14 +74,16 @@ public class TeacherPageController implements Initializable {
             scheduleListView.setItems(teacherModel.getSheduleOverview());
             txtClass.setText(classListView.getSelectionModel().getSelectedItem().getName());
             selectedClass = classListView.getSelectionModel().getSelectedItem().getId();
+            for (Student student: teacherModel.getStudentsOverview()) {
+                student.setAttendance(student.getId(), selectedClass);
+            }
+            studentAttendance.setCellValueFactory(new PropertyValueFactory<>("attendance"));
         });
 
-        if(selectedClass > 0){
-
-        }
         studentFirstName.setCellValueFactory(new PropertyValueFactory<>("firstName"));
         studentLastName.setCellValueFactory(new PropertyValueFactory<>("lastName"));
         studentEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
+
         attendanceTable.setItems(teacherModel.getStudentsOverview());
         attendanceTable.getSelectionModel().selectedItemProperty().addListener((observableValue, student, t1) -> {
             System.out.println(observableValue);
