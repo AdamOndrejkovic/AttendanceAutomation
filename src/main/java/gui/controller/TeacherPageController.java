@@ -5,18 +5,19 @@ import be.Date;
 import be.user.Student;
 import be.user.User;
 import gui.model.TeacherModel;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
-import utility.Months;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -30,8 +31,8 @@ public class TeacherPageController implements Initializable {
     private ListView<Student> studentListView;
     @FXML
     private ListView<Date> scheduleListView;
-    @FXML
-    private ChoiceBox<Months> choiceMonth;
+    /*@FXML
+    private ChoiceBox<Months> choiceMonth;*/
     @FXML
     private Text txtFullName;
     @FXML
@@ -56,10 +57,13 @@ public class TeacherPageController implements Initializable {
 
     private int selectedClass;
 
+    private StudentAttendanceController studentAttendanceController;
+
     private Calendar calendar = Calendar.getInstance(Locale.GERMANY);
 
     public TeacherPageController() {
         teacherModel = new TeacherModel();
+        studentAttendanceController = new StudentAttendanceController();
     }
 
     @Override
@@ -74,24 +78,45 @@ public class TeacherPageController implements Initializable {
             scheduleListView.setItems(teacherModel.getSheduleOverview());
             txtClass.setText(classListView.getSelectionModel().getSelectedItem().getName());
             selectedClass = classListView.getSelectionModel().getSelectedItem().getId();
+            studentFirstName.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+            studentLastName.setCellValueFactory(new PropertyValueFactory<>("lastName"));
+            studentEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
             for (Student student: teacherModel.getStudentsOverview()) {
                 student.setAttendance(student.getId(), selectedClass);
             }
             studentAttendance.setCellValueFactory(new PropertyValueFactory<>("attendance"));
         });
 
-        studentFirstName.setCellValueFactory(new PropertyValueFactory<>("firstName"));
-        studentLastName.setCellValueFactory(new PropertyValueFactory<>("lastName"));
-        studentEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
+
 
         attendanceTable.setItems(teacherModel.getStudentsOverview());
-        attendanceTable.getSelectionModel().selectedItemProperty().addListener((observableValue, student, t1) -> {
+        attendanceTable.getSelectionModel().selectedItemProperty().addListener((observableValue, student, newSelectedStudent) -> {
+            if (newSelectedStudent != null){
+                goToStudentAttendanceView(newSelectedStudent.getId(), selectedClass);
+            }
             System.out.println(observableValue);
             System.out.println(student);
-            System.out.println(t1);
+            System.out.println(newSelectedStudent);
         });
-        //attendanceTable.setItems(teacherModel.getStudentsOverview());
 
+    }
+
+    private void goToStudentAttendanceView(int studentId, int classId) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/userpage/StudentAttendance.fxml"));
+            Parent root = fxmlLoader.load();
+
+            studentAttendanceController = fxmlLoader.getController();
+            studentAttendanceController.setStudentId(studentId);
+            studentAttendanceController.setClassId(classId);
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Attendance");
+            stage.show();
+        } catch (IOException ex) {
+            System.err.println(ex);
+        }
     }
 
     public void submitDate(ActionEvent actionEvent) {

@@ -2,7 +2,7 @@ package be.user;
 
 import bll.AttendanceCalculator;
 
-public class Student extends User{
+public class Student extends User {
     private String attendance = "";
     private AttendanceCalculator attendanceCalculator = new AttendanceCalculator();;
     public Student(String firstName, String lastName, String email, int id) {

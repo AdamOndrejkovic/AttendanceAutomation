@@ -1,25 +1,43 @@
 package bll;
 
+import be.Date;
 import dal.IClassRepository;
 import dal.IStudentRepository;
 import dal.db.DBClassRepository;
 import dal.db.DBStudentRepository;
 
+import java.text.DecimalFormat;
+import java.util.List;
+
 public class AttendanceCalculator {
     private IStudentRepository iStudentRepository = new DBStudentRepository();
     private IClassRepository iClassRepository = new DBClassRepository();
+    private DecimalFormat decimalFormat = new DecimalFormat("#,##");
 
     public String calculateAttendance(int id, int classId){
-        double absence = iClassRepository.getStudentAbsence(id, classId).size();
-        double presence = iClassRepository.getStudentPresence(id, classId).size();
+        double absence = getAbsence(id, classId);
+        double presence = getPresence(id, classId);
         double attendanceInteger = absence / ( absence + presence ) * 100;
 
-        String attendance = String.valueOf(attendanceInteger) + " %";
-        System.out.println(absence);
-        System.out.println(presence);
-        System.out.println(attendance);
+        String attendance = decimalFormat.format(attendanceInteger) + " %";
 
 
         return attendance;
+    }
+
+    public int getPresence(int studentId, int classId){
+        return iClassRepository.getStudentPresence(studentId, classId).size();
+    }
+
+    public int getAbsence(int studentId, int classId){
+        return iClassRepository.getStudentAbsence(studentId, classId).size();
+    }
+
+    public List<Date> getAbsenceList(int studentId, int classId){
+        return  iClassRepository.getStudentAbsence(studentId,classId);
+    }
+
+    public List<Date> getPresenceList(int studentId, int classId){
+        return  iClassRepository.getStudentPresence(studentId,classId);
     }
 }

@@ -1,6 +1,5 @@
 package bll;
 
-import be.Class;
 import be.user.Student;
 import dal.IStudentRepository;
 import dal.db.DBStudentRepository;

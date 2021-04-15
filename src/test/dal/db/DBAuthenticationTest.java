@@ -1,10 +1,6 @@
 package dal.db;
 
-import be.user.Student;
-import be.user.Teacher;
 import org.junit.jupiter.api.*;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class DBAuthenticationTest {
 
