@@ -2,6 +2,7 @@ C:\Users\manta\IdeaProjects\AttendanceAutomation\src\main\java\be\user\Student.j
 C:\Users\manta\IdeaProjects\AttendanceAutomation\src\main\java\bll\AuthenticationManager.java
 C:\Users\manta\IdeaProjects\AttendanceAutomation\src\main\java\dal\db\DBAuthentication.java
 C:\Users\manta\IdeaProjects\AttendanceAutomation\src\main\java\bll\StudentManager.java
+C:\Users\manta\IdeaProjects\AttendanceAutomation\src\main\java\bll\AttendanceCalculator.java
 C:\Users\manta\IdeaProjects\AttendanceAutomation\src\main\java\bll\StatisticsManager.java
 C:\Users\manta\IdeaProjects\AttendanceAutomation\src\main\java\dal\db\DBTeacherRepository.java
 C:\Users\manta\IdeaProjects\AttendanceAutomation\src\main\java\be\user\Teacher.java
@@ -19,6 +20,7 @@ C:\Users\manta\IdeaProjects\AttendanceAutomation\src\main\java\gui\controller\Ed
 C:\Users\manta\IdeaProjects\AttendanceAutomation\src\main\java\be\Class.java
 C:\Users\manta\IdeaProjects\AttendanceAutomation\src\main\java\error\ErrorHandler.java
 C:\Users\manta\IdeaProjects\AttendanceAutomation\src\main\java\gui\controller\RegisterTeacherController.java
+C:\Users\manta\IdeaProjects\AttendanceAutomation\src\main\java\gui\controller\StudentAttendanceController.java
 C:\Users\manta\IdeaProjects\AttendanceAutomation\src\main\java\gui\controller\Alert.java
 C:\Users\manta\IdeaProjects\AttendanceAutomation\src\main\java\be\user\User.java
 C:\Users\manta\IdeaProjects\AttendanceAutomation\src\main\java\be\Date.java
