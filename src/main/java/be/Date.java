@@ -42,4 +42,8 @@ public class Date {
     public String toString() {
         return year + "-" + month + "-" + day;
     }
+
+    public String dayToString(int day){
+        return  Integer.toString(day);
+    }
 }

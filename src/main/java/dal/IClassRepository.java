@@ -1,8 +1,6 @@
 package dal;
 
 import be.Date;
-import be.user.Student;
-import be.user.Teacher;
 import be.Class;
 
 import java.util.List;

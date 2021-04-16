@@ -2,8 +2,6 @@ package dal.db;
 
 import be.Class;
 import be.Date;
-import be.user.Student;
-import be.user.Teacher;
 import dal.IClassRepository;
 import error.ErrorHandler;
 import gui.controller.Alert;
@@ -11,8 +9,6 @@ import gui.controller.Alert;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class DBClassRepository implements IClassRepository {
