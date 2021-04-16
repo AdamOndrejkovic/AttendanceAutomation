@@ -5,6 +5,7 @@ import be.Date;
 import be.user.Teacher;
 import dal.IClassRepository;
 import dal.db.DBClassRepository;
+import utility.Calendar;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -36,24 +37,32 @@ public class ClassManager {
         return classRepository.getStudentAbsence(studentID, classID);
     }
 
-    public void addStudentPresence(int studentID, int classID, Date date){
-        classRepository.addStudentPresence(studentID,classID,date);
+    public List<Date> getStudentPresence(int studentID, int classID, int year, int month) {
+        return classRepository.getStudentPresence(studentID, classID).stream().filter(date -> date.getYear() == year && date.getMonth() == month).collect(Collectors.toList());
     }
 
-    public List<Class> getAllTeacherClasses(int teacherID){
+    public List<Date> getStudentAbsence(int studentID, int classID, int year, int month) {
+        return classRepository.getStudentAbsence(studentID, classID).stream().filter(date -> date.getYear() == year && date.getMonth() == month).collect(Collectors.toList());
+    }
+
+    public void addStudentPresence(int studentID, int classID, Date date) {
+        classRepository.addStudentPresence(studentID, classID, date);
+    }
+
+    public List<Class> getAllTeacherClasses(int teacherID) {
         return classRepository.getAllTeacherClasses(teacherID);
     }
 
-    public void deleteClassDate(int classID, Date date){
-        classRepository.deleteClassDate(classID,date);
+    public void deleteClassDate(int classID, Date date) {
+        classRepository.deleteClassDate(classID, date);
     }
 
-    public void addClassDate(int classID, Date date){
-        classRepository.addClassDate(classID,date);
+    public void addClassDate(int classID, Date date) {
+        classRepository.addClassDate(classID, date);
     }
 
-    public void editClassDate(int classID, Date oldDate,Date newDate){
-        classRepository.editClassDate(classID,oldDate,newDate);
+    public void editClassDate(int classID, Date oldDate, Date newDate) {
+        classRepository.editClassDate(classID, oldDate, newDate);
     }
 
 }

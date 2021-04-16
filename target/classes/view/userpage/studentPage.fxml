@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -81,11 +82,16 @@
                <Font size="50.0" />
             </font>
          </Text>
-         <TilePane fx:id="tileCalendar" prefHeight="447.0" prefTileHeight="50.0" prefTileWidth="50.0" prefWidth="683.0">
+         <TilePane fx:id="tileCalendar" prefHeight="283.0" prefTileHeight="50.0" prefTileWidth="50.0" prefWidth="965.0">
             <VBox.margin>
                <Insets left="10.0" top="10.0" />
             </VBox.margin>
          </TilePane>
+         <HBox alignment="CENTER" prefHeight="200.0" prefWidth="975.0">
+            <children>
+               <PieChart fx:id="pieChart" prefHeight="159.0" prefWidth="249.0" />
+            </children>
+         </HBox>
       </VBox>
    </center>
    <bottom>

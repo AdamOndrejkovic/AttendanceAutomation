@@ -5,6 +5,7 @@ import be.Date;
 import dal.IClassRepository;
 import error.ErrorHandler;
 import gui.controller.Alert;
+import utility.Calendar;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -294,8 +295,10 @@ public class DBClassRepository implements IClassRepository {
         List<String> schedule = getClassSchedule(classID).stream().map(Date::toString).collect(Collectors.toList());
         List<String> presence = getStudentPresence(studentID, classID).stream().map(Date::toString).collect(Collectors.toList());
 
+        int currentDay = Calendar.getDay();
+
         if(schedule.removeAll(presence)){
-            return schedule.stream().map(Date::new).collect(Collectors.toList()); // returns absence dates
+            return schedule.stream().map(Date::new).filter(date -> date.getDay() < currentDay).collect(Collectors.toList()); // returns absence dates
         }
 
         return null;
