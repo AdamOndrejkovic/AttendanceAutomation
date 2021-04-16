@@ -3,10 +3,13 @@ package gui.controller;
 import be.Class;
 import be.Date;
 import gui.model.StudentModel;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.TilePane;
@@ -29,13 +32,14 @@ public class StudentPageController implements Initializable {
     private Text txtFullName;
     @FXML
     private Text txtClass;
-
-    private StudentModel studentModel;
-
+    @FXML
+    private PieChart pieChart;
     @FXML
     private TilePane tileCalendar;
     @FXML
     private Text textMonth;
+
+    private StudentModel studentModel;
 
     public StudentPageController() {
         studentModel = new StudentModel();
@@ -61,48 +65,89 @@ public class StudentPageController implements Initializable {
     }
 
     private void loadCalendar() {
-        int classID = choiceClass.getValue().getId();
-        int selectedMonth = choiceMonth.getValue().getValue();
+        new Thread(() -> {
 
-        List<String> schedule = studentModel.getClassSchedule(classID).stream().map(Date::toString).collect(Collectors.toList());
-        List<String> presence = studentModel.getStudentPresence(classID).stream().map(Date::toString).collect(Collectors.toList());
+            textMonth.setText(choiceMonth.getValue().toString());
 
-        if (!tileCalendar.getChildren().isEmpty()) {
-            tileCalendar.getChildren().clear();
-        }
-        for (int i = 1; i < Calendar.getDaysInMonth(Calendar.getYear(),selectedMonth); i++) {
-            VBox vbox = new VBox();
-            Label label = new Label(String.valueOf(i));
+            int classID = choiceClass.getValue().getId();
+            int loadedMonth = choiceMonth.getValue().getValue();
+            Date currentDate = new Date(Calendar.getYear(), Calendar.getMonth(), Calendar.getDay());
+            drawAbsencePieChart(classID, currentDate.getYear(), loadedMonth);
 
-            Date loadedDate = new Date(Calendar.getYear(), selectedMonth, i);
+            List<String> schedule = studentModel.getClassSchedule(classID).stream().map(Date::toString).collect(Collectors.toList());
+            List<String> presence = studentModel.getStudentPresence(classID).stream().map(Date::toString).collect(Collectors.toList());
 
-            if (schedule.contains(loadedDate.toString())) {
-                if ((loadedDate.getMonth() < Calendar.getMonth() || loadedDate.getMonth() == Calendar.getMonth() && loadedDate.getDay() <= Calendar.getDay()) & presence.contains(loadedDate.toString())) {
-                    vbox.setStyle("-fx-background-color: green");
-                } else if ((loadedDate.getMonth() < Calendar.getMonth() || loadedDate.getMonth() == Calendar.getMonth() && loadedDate.getDay() < Calendar.getDay()) & !presence.contains(loadedDate.toString())) {
-                    vbox.setStyle("-fx-background-color: red");
-                } else if (loadedDate.getMonth() == Calendar.getMonth() && loadedDate.getDay() == Calendar.getDay()) {
-                    vbox.setStyle("-fx-background-color: yellow;-fx-border-color: black;-fx-border-width: 1;");
-                } else {
-                    vbox.setStyle("-fx-background-color: yellow");
-                }
+            if (!tileCalendar.getChildren().isEmpty()) {
+                Platform.runLater(() -> {
+                    tileCalendar.getChildren().clear();
+                });
             }
+            for (int i = 1; i < Calendar.getDaysInMonth(currentDate.getYear(), loadedMonth); i++) {
+                VBox vbox = new VBox();
+                Label label = new Label(String.valueOf(i));
+                Date loadedDate = new Date(currentDate.getYear(), loadedMonth, i);
 
-            vbox.setOnMouseClicked(mouseEvent -> {
-                Date selectedDate = new Date(Calendar.getYear(), selectedMonth, Integer.parseInt(label.getText()));
-
-                if (schedule.contains(selectedDate.toString()) && !presence.contains(selectedDate.toString())) {
-                    if (Calendar.getYear() == selectedDate.getYear() && Calendar.getMonth() == selectedDate.getMonth() && Calendar.getDay() == selectedDate.getDay()) {
+                if (schedule.contains(loadedDate.toString())) {
+                    if ((loadedDate.getMonth() <= currentDate.getMonth() && loadedDate.getDay() <= currentDate.getDay()) & presence.contains(loadedDate.toString())) {
                         vbox.setStyle("-fx-background-color: green");
-                        studentModel.addStudentPresence(classID,selectedDate);
+                    } else if ((loadedDate.getMonth() <= currentDate.getMonth() && loadedDate.getDay() < currentDate.getDay()) & !presence.contains(loadedDate.toString())) {
+                        vbox.setStyle("-fx-background-color: red");
+                    } else if (loadedDate.getMonth() == currentDate.getMonth() && loadedDate.getDay() == currentDate.getDay()) {
+                        vbox.setStyle("-fx-background-color: yellow;-fx-border-color: black;-fx-border-width: 1;");
+                    } else {
+                        vbox.setStyle("-fx-background-color: yellow");
                     }
                 }
-            });
+                vbox.getChildren().add(label);
+                vbox.setAlignment(Pos.CENTER);
 
-            vbox.getChildren().add(new Label(String.valueOf(i)));
-            vbox.setAlignment(Pos.CENTER);
-            tileCalendar.getChildren().add(vbox);
-            textMonth.setText(choiceMonth.getValue().toString());
-        }
+                vbox.setOnMouseClicked(mouseEvent -> {
+                    Date selectedDate = new Date(Calendar.getYear(), loadedMonth, Integer.parseInt(label.getText()));
+
+                    if (schedule.contains(selectedDate.toString()) && !presence.contains(selectedDate.toString())) {
+                        if (Calendar.getYear() == selectedDate.getYear() && Calendar.getMonth() == selectedDate.getMonth() && Calendar.getDay() == selectedDate.getDay()) {
+                            vbox.setStyle("-fx-background-color: green");
+                            studentModel.addStudentPresence(classID, selectedDate);
+                            drawAbsencePieChart(classID, loadedDate.getYear(), loadedDate.getMonth());
+                        }
+                    }
+                });
+
+                Platform.runLater(() -> {
+                    tileCalendar.getChildren().add(vbox);
+                });
+            }
+        }).start();
+    }
+
+    public void drawAbsencePieChart(int classID, int year, int month) {
+        int presentDays = studentModel.getStudentPresence(classID, year, month).size();
+        int absentDays = studentModel.getStudentAbsence(classID, year, month).size();
+        String preText = "Your absence is: ";
+        PieChart.Data present = new PieChart.Data("Present", presentDays);
+        PieChart.Data absent = new PieChart.Data("Absent", absentDays);
+
+        int totalDays = presentDays + absentDays;
+        Platform.runLater(() -> {
+            if (totalDays <= 0) {
+                if (pieChart.isVisible()) {
+                    pieChart.setVisible(false);
+                }
+            } else {
+                if (!pieChart.isVisible()) {
+                    pieChart.setVisible(true);
+                }
+                pieChart.setData(FXCollections.observableList(FXCollections.observableArrayList(
+                        present, absent
+                )));
+
+                if (absentDays > 0) {
+                    int absencePercentage = (int) (((float) absentDays / (float) totalDays) * 100);
+                    pieChart.setTitle(preText + absencePercentage +"%");
+                } else {
+                    pieChart.setTitle(preText + "0%");
+                }
+            }
+        });
     }
 }

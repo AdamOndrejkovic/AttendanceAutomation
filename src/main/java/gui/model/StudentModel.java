@@ -9,6 +9,7 @@ import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class StudentModel {
 
@@ -29,6 +30,17 @@ public class StudentModel {
 
     public List<Date> getStudentPresence(int classID) {
         return classManager.getStudentPresence(session.getUser().getId(), classID);
+    }
+    public List<Date> getStudentAbsence(int classID) {
+        return classManager.getStudentAbsence(session.getUser().getId(), classID);
+    }
+
+    public List<Date> getStudentPresence(int classID, int year, int month) {
+        return classManager.getStudentPresence(session.getUser().getId(), classID,year,month);
+    }
+
+    public List<Date> getStudentAbsence(int classID, int year, int month) {
+        return classManager.getStudentAbsence(session.getUser().getId(), classID,year,month);
     }
 
     public void addStudentPresence(int classID, Date date) {

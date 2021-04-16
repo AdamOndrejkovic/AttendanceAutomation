@@ -2,7 +2,6 @@ utility\Months.class
 gui\controller\TeacherPageController.class
 gui\controller\StudentAttendanceController.class
 Main.class
-bll\StatisticsManager.class
 gui\controller\EditDate.class
 gui\controller\StudentPageController.class
 bll\AttendanceCalculator.class
