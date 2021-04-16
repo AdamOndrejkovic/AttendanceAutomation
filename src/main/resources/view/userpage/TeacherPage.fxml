@@ -15,7 +15,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane prefHeight="607.0" prefWidth="860.0" style="-fx-border-color: black; -fx-border-width: 0;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controller.TeacherPageController">
+<BorderPane prefHeight="583.0" prefWidth="860.0" style="-fx-border-color: black; -fx-border-width: 0;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controller.TeacherPageController">
    <top>
       <HBox alignment="CENTER_LEFT" prefHeight="79.0" prefWidth="844.0" spacing="10.0" style="-fx-background-color: #92a8b1;" BorderPane.alignment="CENTER">
          <HBox alignment="CENTER">
@@ -85,14 +85,14 @@
          </VBox>
          <ButtonBar prefHeight="25.0" prefWidth="0.0">
            <buttons>
-               <Button mnemonicParsing="false" onAction="#editDate" prefHeight="25.0" prefWidth="200.0" text="Edit Date" />
+               <Button mnemonicParsing="false" onAction="#editDate" prefHeight="25.0" prefWidth="235.0" text="Edit Date" />
                <Button mnemonicParsing="false" onAction="#deleteDate" prefHeight="25.0" prefWidth="200.0" text="Delete Date" />
            </buttons>
          </ButtonBar>
          <ButtonBar prefHeight="40.0" prefWidth="200.0">
             <buttons>
                <Button mnemonicParsing="false" onAction="#submitDate" prefHeight="25.0" prefWidth="530.0" text="Add Date" />
-               <DatePicker fx:id="datePicker" prefHeight="25.0" prefWidth="193.0" />
+               <DatePicker fx:id="datePicker" prefHeight="26.0" prefWidth="193.0" />
             </buttons>
          </ButtonBar>
          <HBox alignment="CENTER" spacing="5.0" />
@@ -105,7 +105,7 @@
    </left>
    <center>
       <VBox alignment="TOP_CENTER" prefHeight="377.0" prefWidth="800.0" BorderPane.alignment="CENTER">
-         <VBox alignment="TOP_CENTER" prefHeight="79.0" prefWidth="805.0">
+         <VBox alignment="CENTER" prefHeight="70.0" prefWidth="455.0">
             <children>
                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Student's Attendance">
                   <font>
