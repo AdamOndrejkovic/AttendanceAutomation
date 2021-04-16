@@ -2,8 +2,8 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXComboBox?>
-<?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.control.Label?>
@@ -19,9 +19,9 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <HBox prefHeight="75.0" prefWidth="813.0" style="-fx-background-color: lightblue;">
+      <HBox prefHeight="75.0" prefWidth="835.0" style="-fx-background-color: lightblue;">
          <children>
-            <Label fx:id="title" alignment="CENTER" contentDisplay="CENTER" prefHeight="75.0" prefWidth="823.0" style="-fx-text-alignment: center;" text="Label" textAlignment="JUSTIFY">
+            <Label fx:id="title" alignment="CENTER" contentDisplay="CENTER" prefHeight="75.0" prefWidth="849.0" style="-fx-text-alignment: center;" text="Label" textAlignment="JUSTIFY">
                <font>
                   <Font size="24.0" />
                </font>
@@ -55,12 +55,12 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <Label fx:id="totalAbsence" layoutX="167.0" layoutY="292.0" prefHeight="32.0" prefWidth="62.0" text="Month">
+      <Label fx:id="totalAbsence" layoutX="167.0" layoutY="292.0" prefHeight="32.0" prefWidth="62.0" text="">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label fx:id="mostAbsentDay" layoutX="167.0" layoutY="332.0" prefHeight="32.0" prefWidth="62.0" text="Month">
+      <Label fx:id="mostAbsentDay" layoutX="167.0" layoutY="332.0" prefHeight="32.0" prefWidth="62.0" text="">
          <font>
             <Font size="18.0" />
          </font>
@@ -70,13 +70,13 @@
             <Font size="14.0" />
          </font>
       </JFXButton>
-      <BarChart fx:id="barChart" layoutX="229.0" layoutY="69.0" prefHeight="150.0" prefWidth="578.0">
+      <LineChart fx:id="lineChart" layoutX="243.0" layoutY="75.0" prefHeight="157.0" prefWidth="593.0">
         <xAxis>
           <CategoryAxis side="BOTTOM" />
         </xAxis>
         <yAxis>
           <NumberAxis side="LEFT" />
         </yAxis>
-      </BarChart>
+      </LineChart>
    </children>
 </AnchorPane>
