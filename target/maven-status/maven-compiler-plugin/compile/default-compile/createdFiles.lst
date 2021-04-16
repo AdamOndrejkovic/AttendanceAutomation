@@ -1,9 +1,11 @@
 utility\Months.class
 gui\controller\TeacherPageController.class
+gui\controller\StudentAttendanceController.class
 Main.class
 bll\StatisticsManager.class
 gui\controller\EditDate.class
 gui\controller\StudentPageController.class
+bll\AttendanceCalculator.class
 gui\model\TeacherModel.class
 gui\controller\Alert.class
 gui\controller\RegisterStudentController.class
