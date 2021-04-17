@@ -65,6 +65,7 @@ public class StudentPageController implements Initializable {
     }
 
     private void loadCalendar() {
+        tileCalendar.setVisible(false);
         new Thread(() -> {
 
             textMonth.setText(choiceMonth.getValue().toString());
@@ -117,6 +118,7 @@ public class StudentPageController implements Initializable {
                     tileCalendar.getChildren().add(vbox);
                 });
             }
+            tileCalendar.setVisible(true);
         }).start();
     }
 
