@@ -104,11 +104,9 @@ public class StudentAttendanceController implements Initializable {
                             presenceSeries.setName("Presence");
                             for (Date date : dateListAbsence) {
                                 absenceSeries.getData().add(new XYChart.Data<>(String.valueOf(date.getDay()),2));
-                                //dataSeries.getData().add(new XYChart.Data(date.dayToString(date.getDay()), 0));
                             }
                             for (Date date : dateListPresent) {
                                 presenceSeries.getData().add(new XYChart.Data<>(String.valueOf(date.getDay()),3));
-                                //dataSeries.getData().add(new XYChart.Data(date.dayToString(date.getDay()), 10));
                             }
                             lineChart.getData().add(absenceSeries);
                             lineChart.getData().add(presenceSeries);
