@@ -34,7 +34,8 @@ public class DBAuthentication implements IAuthentication {
     @Override
     public boolean authenticateTeacher(String email, String password) {
         try (Connection con = connection.getConnection()) {
-            String sql = "SELECT Email, Password FROM Teacher WHERE Email = ? AND Password = ?";
+            String sql = "SELECT Email, Password " +
+                    "FROM Teacher WHERE Email = ? AND Password = ?";
             PreparedStatement statement = con.prepareStatement(sql);
 
             statement.setString(1, email);
@@ -55,7 +56,8 @@ public class DBAuthentication implements IAuthentication {
     @Override
     public boolean authenticateStudent(String email, String password) {
         try (Connection con = connection.getConnection()) {
-            String sql = "SELECT Email, Password FROM Student WHERE Email = ? AND Password = ?";
+            String sql = "SELECT Email, Password " +
+                    "FROM Student WHERE Email = ? AND Password = ?";
             PreparedStatement statement = con.prepareStatement(sql);
 
             statement.setString(1, email);
