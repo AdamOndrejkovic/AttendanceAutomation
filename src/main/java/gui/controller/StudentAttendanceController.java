@@ -2,6 +2,8 @@ package gui.controller;
 
 import be.Date;
 import bll.AttendanceCalculator;
+import bll.ClassManager;
+import bll.StudentManager;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import javafx.application.Platform;
@@ -15,6 +17,7 @@ import javafx.scene.Node;
 import javafx.scene.chart.*;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import utility.Months;
 
 import java.net.URL;
 import java.util.*;
@@ -34,7 +37,7 @@ public class StudentAttendanceController implements Initializable {
     PieChart pieChart;
 
     @FXML
-    LineChart lineChart;
+    LineChart<String,Number> lineChart;
 
     @FXML
     Label title;
@@ -57,7 +60,6 @@ public class StudentAttendanceController implements Initializable {
     @FXML
     JFXButton close;
 
-    private XYChart.Series <String, Integer> dataSeries;
 
     public StudentAttendanceController() {
         attendanceCalculator = new AttendanceCalculator();
@@ -73,16 +75,13 @@ public class StudentAttendanceController implements Initializable {
         yearPicker.setItems(years);
 
         monthPicker.getSelectionModel().selectedItemProperty().addListener( (observableValue, o, t1) -> {
-            lineChart.getData().removeAll(dataSeries);
+            lineChart.getData().clear();
             int selectedYear = (int) yearPicker.getSelectionModel().selectedItemProperty().getValue();
-
-
             if (t1 != null){
                 // Slow region new Thread
                 Thread t = new Thread(()->{
                     List<Date> dateListPresent = attendanceCalculator.getPresenceList(studentId, classId).stream().filter(date -> date.getMonth() == months.indexOf(t1) + 1 && date.getYear() == selectedYear).collect(Collectors.toList());
                     List<Date> dateListAbsence = attendanceCalculator.getAbsenceList(studentId, classId).stream().filter(date -> date.getMonth() == months.indexOf(t1) + 1 && date.getYear() == selectedYear).collect(Collectors.toList());
-
                     // GUI update
                     Platform.runLater(()->{
                         System.out.println(months.indexOf(t1));
@@ -99,27 +98,20 @@ public class StudentAttendanceController implements Initializable {
                             totalAbsence.setText(String.valueOf(absence));
                             totalPresence.setText(String.valueOf(presence));
 
-                            CategoryAxis xaxis= new CategoryAxis();
-                            NumberAxis yaxis = new NumberAxis(0.1,2,0.1);
-                            xaxis.setLabel("Date");
-                            yaxis.setLabel("Absence");
-
-                            dataSeries = new XYChart.Series<String, Integer>();
-                            dataSeries.setName(t1.toString() + " attendance");
-
+                            XYChart.Series <String, Number> absenceSeries = new XYChart.Series<>();
+                            absenceSeries.setName("Absence");
+                            XYChart.Series <String, Number> presenceSeries = new XYChart.Series<>();
+                            presenceSeries.setName("Presence");
                             for (Date date : dateListAbsence) {
-                                dataSeries.getData().add(new XYChart.Data(date.dayToString(date.getDay()), 0));
+                                absenceSeries.getData().add(new XYChart.Data<>(String.valueOf(date.getDay()),2));
+                                //dataSeries.getData().add(new XYChart.Data(date.dayToString(date.getDay()), 0));
                             }
                             for (Date date : dateListPresent) {
-                                dataSeries.getData().add(new XYChart.Data(date.dayToString(date.getDay()), 10));
+                                presenceSeries.getData().add(new XYChart.Data<>(String.valueOf(date.getDay()),3));
+                                //dataSeries.getData().add(new XYChart.Data(date.dayToString(date.getDay()), 10));
                             }
-
-
-
-                            lineChart.getData().addAll(dataSeries);
-                            lineChart.getYAxis().setAutoRanging(false);
-                            ((NumberAxis)lineChart.getYAxis()).setUpperBound(15);
-
+                            lineChart.getData().add(absenceSeries);
+                            lineChart.getData().add(presenceSeries);
                         }
                     });
                 });
