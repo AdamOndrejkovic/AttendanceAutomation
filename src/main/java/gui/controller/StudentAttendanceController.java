@@ -26,6 +26,7 @@ import java.util.stream.Collectors;
 public class StudentAttendanceController implements Initializable {
 
     private AttendanceCalculator attendanceCalculator;
+    private ClassManager classManager;
 
     private ObservableList<PieChart.Data> pieChartDataList;
     private int absence;
@@ -46,7 +47,7 @@ public class StudentAttendanceController implements Initializable {
     JFXComboBox yearPicker;
 
     @FXML
-    JFXComboBox monthPicker;
+    JFXComboBox<Months> monthPicker;
 
     @FXML
     Label totalAbsence;
@@ -63,15 +64,15 @@ public class StudentAttendanceController implements Initializable {
 
     public StudentAttendanceController() {
         attendanceCalculator = new AttendanceCalculator();
+        classManager = new ClassManager();
     }
 
-    private ObservableList<String> months = FXCollections.observableArrayList("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
     private ObservableList<Integer> years = FXCollections.observableArrayList(Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.YEAR) - 1, Calendar.getInstance().get(Calendar.YEAR) - 2);
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         yearPicker.setValue(years.get(0));
-        monthPicker.setItems(months);
+        monthPicker.setItems(FXCollections.observableList(Arrays.asList(Months.values())));
         yearPicker.setItems(years);
 
         monthPicker.getSelectionModel().selectedItemProperty().addListener( (observableValue, o, t1) -> {
@@ -80,13 +81,17 @@ public class StudentAttendanceController implements Initializable {
             if (t1 != null){
                 // Slow region new Thread
                 Thread t = new Thread(()->{
-                    List<Date> dateListPresent = attendanceCalculator.getPresenceList(studentId, classId).stream().filter(date -> date.getMonth() == months.indexOf(t1) + 1 && date.getYear() == selectedYear).collect(Collectors.toList());
-                    List<Date> dateListAbsence = attendanceCalculator.getAbsenceList(studentId, classId).stream().filter(date -> date.getMonth() == months.indexOf(t1) + 1 && date.getYear() == selectedYear).collect(Collectors.toList());
+                    List<Date> scheduleDates = classManager.getClassSchedule(classId);
+                    List<Date> presenceDates = classManager.getStudentPresence(studentId, classId,selectedYear,monthPicker.getValue().getValue());
+                    System.out.println(presenceDates);
+                    List<Date> absenceDates = classManager.getStudentAbsence(studentId, classId,selectedYear,monthPicker.getValue().getValue());
+                    System.out.println(absenceDates);
+
                     // GUI update
                     Platform.runLater(()->{
-                        System.out.println(months.indexOf(t1));
-                        absence = dateListAbsence.size();
-                        presence = dateListPresent.size();
+
+                        absence = absenceDates.size();
+                        presence = presenceDates.size();
 
 
                         if(absence != 0 || presence != 0) {
@@ -98,17 +103,18 @@ public class StudentAttendanceController implements Initializable {
                             totalAbsence.setText(String.valueOf(absence));
                             totalPresence.setText(String.valueOf(presence));
 
-                            XYChart.Series <String, Number> absenceSeries = new XYChart.Series<>();
-                            absenceSeries.setName("Absence");
                             XYChart.Series <String, Number> presenceSeries = new XYChart.Series<>();
                             presenceSeries.setName("Presence");
-                            for (Date date : dateListAbsence) {
-                                absenceSeries.getData().add(new XYChart.Data<>(String.valueOf(date.getDay()),2));
+                            List<String> presence = presenceDates.stream().map(Date::toString).collect(Collectors.toList());
+                            List<String> absence = absenceDates.stream().map(Date::toString).collect(Collectors.toList());
+
+                            for(Date date:scheduleDates){
+                                if(presence.contains(date.toString())){
+                                    presenceSeries.getData().add(new XYChart.Data<>(String.valueOf(date.getDay()),2));
+                                }else if(absence.contains(date.toString())){
+                                    presenceSeries.getData().add(new XYChart.Data<>(String.valueOf(date.getDay()),1));
+                                }
                             }
-                            for (Date date : dateListPresent) {
-                                presenceSeries.getData().add(new XYChart.Data<>(String.valueOf(date.getDay()),3));
-                            }
-                            lineChart.getData().add(absenceSeries);
                             lineChart.getData().add(presenceSeries);
                         }
                     });
@@ -134,22 +140,6 @@ public class StudentAttendanceController implements Initializable {
 
             }
         });
-
-
-           // System.out.println(attendanceCalculator.getAbsence(studentId,classId));
-           // System.out.println(attendanceCalculator.getPresence(studentId,classId));
-
-
-
-
-
-            System.out.println(getClassId());
-            System.out.println(getStudentId());
-            System.out.println(presence);
-            System.out.println(absence);
-
-            monthPicker.setItems(months);
-            yearPicker.setItems(years);
     }
 
     public void setStudentId(int id){

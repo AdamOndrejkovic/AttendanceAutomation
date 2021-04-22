@@ -70,12 +70,12 @@
             <Font size="14.0" />
          </font>
       </JFXButton>
-      <LineChart fx:id="lineChart" alternativeColumnFillVisible="true" axisSortingPolicy="Y_AXIS" layoutX="186.0" layoutY="75.0" legendSide="RIGHT" prefHeight="231.0" prefWidth="932.0">
+      <LineChart fx:id="lineChart" alternativeColumnFillVisible="true" layoutX="186.0" layoutY="75.0" legendSide="RIGHT" prefHeight="231.0" prefWidth="932.0">
         <xAxis>
           <CategoryAxis animated="false" gapStartAndEnd="false" prefHeight="37.0" prefWidth="597.0" startMargin="0.0" tickLabelGap="1.0" fx:id="xAxis" />
         </xAxis>
         <yAxis>
-          <NumberAxis autoRanging="false" label="2 = Absent, 3 = Present" lowerBound="1.0" minorTickCount="0" prefHeight="237.0" prefWidth="51.0" side="LEFT" tickLabelGap="10.0" tickLength="10.0" tickUnit="1.0" upperBound="4.0" />
+          <NumberAxis autoRanging="false" label="1 = Absent, 2 = Present" lowerBound="1.0" minorTickCount="0" prefHeight="237.0" prefWidth="51.0" side="LEFT" tickLabelGap="10.0" tickLength="10.0" tickUnit="1.0" upperBound="3.0" />
         </yAxis>
       </LineChart>
    </children>

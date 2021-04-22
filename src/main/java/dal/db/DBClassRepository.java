@@ -287,7 +287,7 @@ public class DBClassRepository implements IClassRepository {
         } catch (SQLException ex) {
             errorHandler.errorDevelopmentInfo("Issue when getting student presence", ex);
         }
-        return null;
+        return new ArrayList<>();
     }
 
     @Override
@@ -301,6 +301,6 @@ public class DBClassRepository implements IClassRepository {
             return schedule.stream().map(Date::new).filter(date -> date.getDay() < currentDay).collect(Collectors.toList()); // returns absence dates
         }
 
-        return null;
+        return new ArrayList<>();
     }
 }

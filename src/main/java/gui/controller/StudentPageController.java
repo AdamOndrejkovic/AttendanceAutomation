@@ -125,6 +125,7 @@ public class StudentPageController implements Initializable {
     public void drawAbsencePieChart(int classID, int year, int month) {
         int presentDays = studentModel.getStudentPresence(classID, year, month).size();
         int absentDays = studentModel.getStudentAbsence(classID, year, month).size();
+
         String preText = "Your absence is: ";
         PieChart.Data present = new PieChart.Data("Present", presentDays);
         PieChart.Data absent = new PieChart.Data("Absent", absentDays);
