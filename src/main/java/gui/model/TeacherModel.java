@@ -26,7 +26,7 @@ public class TeacherModel {
         studentManager = new StudentManager();
 
         classOverview = FXCollections.observableList(classManager.getAllTeacherClasses(session.getUser().getId()));
-        studentsOverview = FXCollections.observableList(studentManager.getAllStudents());
+        studentsOverview = FXCollections.observableList(new ArrayList<>());
         scheduleOverview = FXCollections.observableList(new ArrayList<>());
     }
 
@@ -44,10 +44,9 @@ public class TeacherModel {
         classManager.editClassDate(classID,oldDate,newDate);
         updateSheduleOverview(classID);
     }
-
-    public void updateStudentsOverview(){
+    public void updateStudentsOverview(int classID){
         studentsOverview.clear();
-        studentsOverview.addAll(FXCollections.observableList(studentManager.getClassStudents(session.getUser().getId())));
+        studentsOverview.addAll(FXCollections.observableList(studentManager.getClassStudents(classID)));
     }
 
     public void updateSheduleOverview(int classID){

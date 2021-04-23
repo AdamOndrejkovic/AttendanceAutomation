@@ -10,7 +10,6 @@ import java.text.DecimalFormat;
 import java.util.List;
 
 public class AttendanceCalculator {
-    private IStudentRepository iStudentRepository = new DBStudentRepository();
     private IClassRepository iClassRepository = new DBClassRepository();
     private DecimalFormat decimalFormat = new DecimalFormat("#,##");
 
@@ -19,10 +18,7 @@ public class AttendanceCalculator {
         double presence = getPresence(id, classId);
         double attendanceInteger = absence / ( absence + presence ) * 100;
 
-        String attendance = decimalFormat.format(attendanceInteger) + " %";
-
-
-        return attendance;
+        return decimalFormat.format(attendanceInteger) + " %";
     }
 
     public int getPresence(int studentId, int classId){

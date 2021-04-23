@@ -1,5 +1,8 @@
 package be;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+
 public class Date {
     private int year, month, day;
 
@@ -36,6 +39,10 @@ public class Date {
 
     public void setDay(int day) {
         this.day = day;
+    }
+
+    public int getDayOfTheWeek(){
+        return DayOfWeek.from(LocalDate.of(year,month,day)).getValue();
     }
 
     @Override

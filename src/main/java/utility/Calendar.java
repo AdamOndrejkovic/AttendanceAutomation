@@ -2,7 +2,10 @@ package utility;
 
 import be.Date;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.YearMonth;
+import java.time.temporal.Temporal;
 import java.util.Locale;
 
 public class Calendar {

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXComboBox?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
@@ -9,74 +9,61 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400.0" minWidth="800.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controller.StudentAttendanceController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="314.0" minWidth="800.0" prefHeight="314.0" prefWidth="1308.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controller.StudentAttendanceController">
    <children>
-      <PieChart fx:id="pieChart" layoutY="81.0" prefHeight="147.0" prefWidth="243.0" />
-      <Label layoutX="646.0" layoutY="308.0" prefHeight="32.0" prefWidth="35.0" text="Year">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
-      <HBox prefHeight="75.0" prefWidth="835.0" style="-fx-background-color: lightblue;">
+      <HBox alignment="CENTER" prefHeight="75.0" prefWidth="1308.0" style="-fx-background-color: lightblue;">
          <children>
-            <Label fx:id="title" alignment="CENTER" contentDisplay="CENTER" prefHeight="75.0" prefWidth="849.0" style="-fx-text-alignment: center;" text="Label" textAlignment="JUSTIFY">
+            <Label fx:id="title" alignment="CENTER" contentDisplay="CENTER" prefHeight="75.0" prefWidth="849.0" style="-fx-text-alignment: center;" text="Student Tracker" textAlignment="JUSTIFY">
                <font>
                   <Font size="24.0" />
                </font>
             </Label>
          </children>
       </HBox>
-      <JFXComboBox fx:id="yearPicker" layoutX="717.0" layoutY="308.0" />
-      <Label layoutX="443.0" layoutY="308.0" prefHeight="32.0" prefWidth="62.0" text="Month">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
-      <JFXComboBox fx:id="monthPicker" layoutX="531.0" layoutY="312.0" />
-      <Label layoutX="16.0" layoutY="253.0" prefHeight="32.0" prefWidth="118.0" text="Total Presence">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
-      <Label layoutX="16.0" layoutY="292.0" prefHeight="32.0" prefWidth="118.0" text="Total Absence">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
-      <Label layoutX="4.0" layoutY="332.0" prefHeight="32.0" prefWidth="141.0" text="Most Absent Day">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
-      <Label fx:id="totalPresence" layoutX="167.0" layoutY="249.0" prefHeight="32.0" prefWidth="62.0">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
-      <Label fx:id="totalAbsence" layoutX="167.0" layoutY="292.0" prefHeight="32.0" prefWidth="62.0" text="">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
-      <Label fx:id="mostAbsentDay" layoutX="167.0" layoutY="332.0" prefHeight="32.0" prefWidth="62.0" text="">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
-      <JFXButton fx:id="close" layoutX="719.0" layoutY="339.0" onAction="#closeWindow" text="Close">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </JFXButton>
-      <LineChart fx:id="lineChart" alternativeColumnFillVisible="true" axisSortingPolicy="Y_AXIS" layoutX="186.0" layoutY="75.0" legendSide="RIGHT" prefHeight="231.0" prefWidth="932.0">
-        <xAxis>
-          <CategoryAxis animated="false" gapStartAndEnd="false" prefHeight="37.0" prefWidth="597.0" startMargin="0.0" tickLabelGap="1.0" fx:id="xAxis" />
-        </xAxis>
-        <yAxis>
-          <NumberAxis autoRanging="false" label="2 = Absent, 3 = Present" lowerBound="1.0" minorTickCount="0" prefHeight="237.0" prefWidth="51.0" side="LEFT" tickLabelGap="10.0" tickLength="10.0" tickUnit="1.0" upperBound="4.0" />
-        </yAxis>
-      </LineChart>
+      <HBox alignment="CENTER_LEFT" layoutY="75.0" prefHeight="194.0" prefWidth="1308.0">
+         <children>
+            <VBox alignment="CENTER_LEFT" prefHeight="174.0" prefWidth="296.0" spacing="10.0">
+               <children>
+                  <Label fx:id="totalPresence" prefHeight="32.0" prefWidth="548.0" />
+                  <Label fx:id="totalAbsence" prefHeight="32.0" prefWidth="462.0" />
+                  <Label fx:id="mostAbsentDay" prefHeight="32.0" prefWidth="340.0" />
+               </children>
+               <HBox.margin>
+                  <Insets left="5.0" />
+               </HBox.margin>
+            </VBox>
+            <PieChart fx:id="pieChart" prefHeight="174.0" prefWidth="373.0" />
+            <LineChart fx:id="lineChart" alternativeColumnFillVisible="true" legendSide="RIGHT" legendVisible="false" prefHeight="194.0" prefWidth="637.0">
+              <xAxis>
+                <CategoryAxis animated="false" gapStartAndEnd="false" prefHeight="37.0" prefWidth="597.0" startMargin="0.0" tickLabelGap="1.0" fx:id="xAxis" />
+              </xAxis>
+              <yAxis>
+                <NumberAxis autoRanging="false" label="1 = Absent, 2 = Present" lowerBound="1.0" minorTickCount="0" side="LEFT" tickLabelGap="10.0" tickLength="10.0" tickUnit="1.0" upperBound="3.0" />
+              </yAxis>
+            </LineChart>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER_RIGHT" layoutY="258.0" prefHeight="66.0" prefWidth="1308.0" spacing="40.0">
+         <children>
+            <Label prefHeight="32.0" prefWidth="62.0" text="Month">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <JFXComboBox fx:id="monthPicker" />
+            <Label prefHeight="32.0" prefWidth="35.0" text="Year">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <JFXComboBox fx:id="yearPicker" />
+         </children>
+         <padding>
+            <Insets bottom="15.0" right="15.0" />
+         </padding>
+      </HBox>
    </children>
 </AnchorPane>

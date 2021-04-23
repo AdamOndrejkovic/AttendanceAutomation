@@ -5,6 +5,7 @@ import be.Date;
 import be.user.Student;
 import be.user.User;
 import gui.model.TeacherModel;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,6 +22,7 @@ import java.net.URL;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class TeacherPageController implements Initializable {
     @FXML
@@ -55,11 +57,9 @@ public class TeacherPageController implements Initializable {
 
     private TeacherModel teacherModel;
 
-    private int selectedClass;
-
     private StudentAttendanceController studentAttendanceController;
 
-    private Calendar calendar = Calendar.getInstance(Locale.GERMANY);
+    private Calendar calendar = Calendar.getInstance();
 
     public TeacherPageController() {
         teacherModel = new TeacherModel();
@@ -72,31 +72,29 @@ public class TeacherPageController implements Initializable {
         scheduleListView.setPlaceholder(new Label("Please select a class"));
         scheduleListView.setMinWidth(125.00);
         txtFullName.setText(Session.getInstance().getUser().getFirstName() + " " + Session.getInstance().getUser().getLastName());
+
+        studentFirstName.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+        studentLastName.setCellValueFactory(new PropertyValueFactory<>("lastName"));
+        studentEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
+        studentAttendance.setCellValueFactory(new PropertyValueFactory<>("attendance"));
+
         classListView.getSelectionModel().selectedItemProperty().addListener(observable -> {
-            teacherModel.updateStudentsOverview();
-            teacherModel.updateSheduleOverview(classListView.getSelectionModel().getSelectedItem().getId());
-            scheduleListView.setItems(teacherModel.getSheduleOverview());
-            txtClass.setText(classListView.getSelectionModel().getSelectedItem().getName());
-            selectedClass = classListView.getSelectionModel().getSelectedItem().getId();
-            studentFirstName.setCellValueFactory(new PropertyValueFactory<>("firstName"));
-            studentLastName.setCellValueFactory(new PropertyValueFactory<>("lastName"));
-            studentEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
-            for (Student student: teacherModel.getStudentsOverview()) {
-                student.setAttendance(student.getId(), selectedClass);
-            }
-            studentAttendance.setCellValueFactory(new PropertyValueFactory<>("attendance"));
+                    int selectedClass = classListView.getSelectionModel().getSelectedItem().getId();
+                    teacherModel.updateStudentsOverview(selectedClass);
+                    for (Student student : teacherModel.getStudentsOverview()) {
+                        student.setAttendance(student.getId(), selectedClass);
+                    }
+                    teacherModel.updateSheduleOverview(selectedClass);
+                    scheduleListView.setItems(teacherModel.getSheduleOverview());
+                    attendanceTable.setItems(teacherModel.getStudentsOverview());
+                    txtClass.setText(classListView.getSelectionModel().getSelectedItem().getName());
         });
 
-
-
-        attendanceTable.setItems(teacherModel.getStudentsOverview());
         attendanceTable.getSelectionModel().selectedItemProperty().addListener((observableValue, student, newSelectedStudent) -> {
-            if (newSelectedStudent != null){
+            if (newSelectedStudent != null) {
+                int selectedClass = classListView.getSelectionModel().getSelectedItem().getId();
                 goToStudentAttendanceView(newSelectedStudent.getId(), selectedClass);
             }
-            System.out.println(observableValue);
-            System.out.println(student);
-            System.out.println(newSelectedStudent);
         });
 
     }
@@ -113,6 +111,7 @@ public class TeacherPageController implements Initializable {
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.setTitle("Attendance");
+            stage.setResizable(false);
             stage.show();
         } catch (IOException ex) {
             System.err.println(ex);

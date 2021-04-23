@@ -17,10 +17,13 @@ import javafx.scene.Node;
 import javafx.scene.chart.*;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import utility.Calendar;
 import utility.Months;
 
 import java.net.URL;
+import java.time.DayOfWeek;
 import java.util.*;
+import java.util.function.BinaryOperator;
 import java.util.stream.Collectors;
 
 public class StudentAttendanceController implements Initializable {
@@ -29,8 +32,6 @@ public class StudentAttendanceController implements Initializable {
     private ClassManager classManager;
 
     private ObservableList<PieChart.Data> pieChartDataList;
-    private int absence;
-    private int presence;
     private int studentId;
     private int classId;
 
@@ -38,13 +39,13 @@ public class StudentAttendanceController implements Initializable {
     PieChart pieChart;
 
     @FXML
-    LineChart<String,Number> lineChart;
+    LineChart<String, Number> lineChart;
 
     @FXML
     Label title;
 
     @FXML
-    JFXComboBox yearPicker;
+    JFXComboBox<Integer> yearPicker;
 
     @FXML
     JFXComboBox<Months> monthPicker;
@@ -58,110 +59,106 @@ public class StudentAttendanceController implements Initializable {
     @FXML
     Label mostAbsentDay;
 
-    @FXML
-    JFXButton close;
-
-
     public StudentAttendanceController() {
         attendanceCalculator = new AttendanceCalculator();
         classManager = new ClassManager();
     }
 
-    private ObservableList<Integer> years = FXCollections.observableArrayList(Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.YEAR) - 1, Calendar.getInstance().get(Calendar.YEAR) - 2);
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        yearPicker.setValue(years.get(0));
         monthPicker.setItems(FXCollections.observableList(Arrays.asList(Months.values())));
-        yearPicker.setItems(years);
-
-        monthPicker.getSelectionModel().selectedItemProperty().addListener( (observableValue, o, t1) -> {
-            lineChart.getData().clear();
-            int selectedYear = (int) yearPicker.getSelectionModel().selectedItemProperty().getValue();
-            if (t1 != null){
-                // Slow region new Thread
-                Thread t = new Thread(()->{
-                    List<Date> scheduleDates = classManager.getClassSchedule(classId);
-                    List<Date> presenceDates = classManager.getStudentPresence(studentId, classId,selectedYear,monthPicker.getValue().getValue());
-                    System.out.println(presenceDates);
-                    List<Date> absenceDates = classManager.getStudentAbsence(studentId, classId,selectedYear,monthPicker.getValue().getValue());
-                    System.out.println(absenceDates);
-
-                    // GUI update
-                    Platform.runLater(()->{
-
-                        absence = absenceDates.size();
-                        presence = presenceDates.size();
+        yearPicker.setItems(FXCollections.observableArrayList(Calendar.getYear(), Calendar.getYear() - 1, Calendar.getYear() - 2));
+        yearPicker.setValue(yearPicker.getItems().get(0));
 
 
-                        if(absence != 0 || presence != 0) {
-                            pieChartDataList = FXCollections.observableArrayList(
-                                    new PieChart.Data("Absence", absence),
-                                    new PieChart.Data("Presence", presence)
-                            );
-                            pieChart.setData(pieChartDataList);
-                            totalAbsence.setText(String.valueOf(absence));
-                            totalPresence.setText(String.valueOf(presence));
+        monthPicker.getSelectionModel().selectedItemProperty().addListener((observableValue, o, t1) -> {
+            if (!yearPicker.getSelectionModel().isEmpty()) {
+                int year = yearPicker.getValue();
+                int month = monthPicker.getValue().getValue();
+                List<Date> presenceDates = classManager.getStudentPresence(studentId, classId, year, month);
+                List<Date> absenceDates = classManager.getStudentAbsence(studentId, classId, year, month);
+                int absence = absenceDates.size();
+                int presence = presenceDates.size();
+                lineChart.getData().clear();
+                if (t1 != null) {
+                    // Slow region new Thread
+                    Thread t = new Thread(() -> {
 
-                            XYChart.Series <String, Number> presenceSeries = new XYChart.Series<>();
+                        // GUI update
+                        Platform.runLater(() -> {
+
+                            drawPieChart(absence, presence);
+
+                            XYChart.Series<String, Number> presenceSeries = new XYChart.Series<>();
                             presenceSeries.setName("Presence");
-                            List<String> presence = presenceDates.stream().map(Date::toString).collect(Collectors.toList());
-                            List<String> absence = absenceDates.stream().map(Date::toString).collect(Collectors.toList());
 
-                            for(Date date:scheduleDates){
-                                if(presence.contains(date.toString())){
-                                    presenceSeries.getData().add(new XYChart.Data<>(String.valueOf(date.getDay()),2));
-                                }else if(absence.contains(date.toString())){
-                                    presenceSeries.getData().add(new XYChart.Data<>(String.valueOf(date.getDay()),1));
+                            List<Date> scheduleDates = classManager.getClassSchedule(classId);
+                            for (Date date : scheduleDates) {
+                                if (presenceDates.stream().map(Date::toString).anyMatch(s -> s.equals(date.toString()))) {
+                                    presenceSeries.getData().add(new XYChart.Data<>(String.valueOf(date.getDay()), 2));
+                                } else if (absenceDates.stream().map(Date::toString).anyMatch(s -> s.equals(date.toString()))) {
+                                    presenceSeries.getData().add(new XYChart.Data<>(String.valueOf(date.getDay()), 1));
                                 }
                             }
                             lineChart.getData().add(presenceSeries);
-                        }
+                            displayLabels(absence, presence, month, year);
+                        });
                     });
-                });
-                t.start();
+                    t.start();
 
+                }
             }
         });
 
 
-        yearPicker.getSelectionModel().selectedItemProperty().addListener( (observableValue, o, t1) -> {
-            if (t1 != null){
-                List<Date> dateListPresent = attendanceCalculator.getPresenceList(studentId, classId).stream().filter(date ->  date.getYear() == (int) t1).collect(Collectors.toList());
-                List<Date> dateListAbsence = attendanceCalculator.getAbsenceList(studentId, classId).stream().filter(date -> date.getMonth() == (int) t1).collect(Collectors.toList());
+        yearPicker.getSelectionModel().selectedItemProperty().addListener((observableValue, o, t1) -> {
+            if (!monthPicker.getSelectionModel().isEmpty()) {
+                int year = yearPicker.getValue();
+                int month = monthPicker.getValue().getValue();
+                List<Date> presenceDates = classManager.getStudentPresence(studentId, classId, year, month);
+                List<Date> absenceDates = classManager.getStudentAbsence(studentId, classId, year, month);
+                int absence = presenceDates.size();
+                int presence = absenceDates.size();
 
-                pieChartDataList = FXCollections.observableArrayList(
-                        new PieChart.Data("Absence" , absence),
-                        new PieChart.Data("Presence" , presence)
-                );
-                pieChart.setData(pieChartDataList);
-                totalAbsence.setText(String.valueOf(absence));
-                totalPresence.setText(String.valueOf(presence));
-
+                drawPieChart(absence, presence);
+                displayLabels(absence, presence, month, year);
             }
         });
     }
 
-    public void setStudentId(int id){
+    private String getMostAbsentDay(int year, int month) {
+        List<Integer> absenceDates = classManager.getStudentAbsence(studentId, classId, year, month).stream().map(Date::getDayOfTheWeek).collect(Collectors.toList());
+        Optional<Integer> maxOccurredElement = absenceDates.stream()
+                .reduce(BinaryOperator.maxBy(Comparator.comparingInt(o -> Collections.frequency(absenceDates, o))));
+
+        return maxOccurredElement.map(integer -> DayOfWeek.of(integer).name()).orElse("No Data");
+    }
+
+    public void displayLabels(int absence, int presence, int month, int year) {
+        totalPresence.setText("Total Presence: " + presence);
+        totalAbsence.setText("Total Absence: " + absence);
+        mostAbsentDay.setText("Most Absent Day: " + getMostAbsentDay(year, month));
+    }
+
+    public void drawPieChart(int absence, int presence) {
+
+        pieChartDataList = FXCollections.observableArrayList(
+                new PieChart.Data("Absence", absence),
+                new PieChart.Data("Presence", presence)
+        );
+
+        pieChart.setData(pieChartDataList);
+    }
+
+    public void setStudentId(int id) {
         this.studentId = id;
     }
 
-    public void setClassId(int classId){
+    public void setClassId(int classId) {
         this.classId = classId;
-    }
-
-    public int getStudentId() {
-        return studentId;
     }
 
     public int getClassId() {
         return classId;
-    }
-
-    public void closeWindow(ActionEvent actionEvent) {
-        System.out.println(getClassId());
-        System.out.println(getStudentId());
-       /* Stage stage = (Stage) close.getScene().getWindow();
-        stage.close();*/
     }
 }
