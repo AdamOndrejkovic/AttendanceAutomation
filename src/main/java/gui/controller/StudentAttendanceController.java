@@ -73,55 +73,14 @@ public class StudentAttendanceController implements Initializable {
 
         monthPicker.getSelectionModel().selectedItemProperty().addListener((observableValue, o, t1) -> {
             if (!yearPicker.getSelectionModel().isEmpty()) {
-                int year = yearPicker.getValue();
-                int month = monthPicker.getValue().getValue();
-                List<Date> presenceDates = classManager.getStudentPresence(studentId, classId, year, month);
-                List<Date> absenceDates = classManager.getStudentAbsence(studentId, classId, year, month);
-                int absence = absenceDates.size();
-                int presence = presenceDates.size();
-                lineChart.getData().clear();
-                if (t1 != null) {
-                    // Slow region new Thread
-                    Thread t = new Thread(() -> {
-
-                        // GUI update
-                        Platform.runLater(() -> {
-
-                            drawPieChart(absence, presence);
-
-                            XYChart.Series<String, Number> presenceSeries = new XYChart.Series<>();
-                            presenceSeries.setName("Presence");
-
-                            List<Date> scheduleDates = classManager.getClassSchedule(classId);
-                            for (Date date : scheduleDates) {
-                                if (presenceDates.stream().map(Date::toString).anyMatch(s -> s.equals(date.toString()))) {
-                                    presenceSeries.getData().add(new XYChart.Data<>(String.valueOf(date.getDay()), 2));
-                                } else if (absenceDates.stream().map(Date::toString).anyMatch(s -> s.equals(date.toString()))) {
-                                    presenceSeries.getData().add(new XYChart.Data<>(String.valueOf(date.getDay()), 1));
-                                }
-                            }
-                            lineChart.getData().add(presenceSeries);
-                            displayLabels(absence, presence, month, year);
-                        });
-                    });
-                    t.start();
-
-                }
+                loadContent(t1.getValue(),yearPicker.getValue());
             }
         });
 
 
         yearPicker.getSelectionModel().selectedItemProperty().addListener((observableValue, o, t1) -> {
-            if (!monthPicker.getSelectionModel().isEmpty()) {
-                int year = yearPicker.getValue();
-                int month = monthPicker.getValue().getValue();
-                List<Date> presenceDates = classManager.getStudentPresence(studentId, classId, year, month);
-                List<Date> absenceDates = classManager.getStudentAbsence(studentId, classId, year, month);
-                int absence = presenceDates.size();
-                int presence = absenceDates.size();
-
-                drawPieChart(absence, presence);
-                displayLabels(absence, presence, month, year);
+            if(!monthPicker.getSelectionModel().isEmpty()) {
+                loadContent(monthPicker.getValue().getValue(), t1);
             }
         });
     }
@@ -134,20 +93,39 @@ public class StudentAttendanceController implements Initializable {
         return maxOccurredElement.map(integer -> DayOfWeek.of(integer).name()).orElse("No Data");
     }
 
-    public void displayLabels(int absence, int presence, int month, int year) {
-        totalPresence.setText("Total Presence: " + presence);
-        totalAbsence.setText("Total Absence: " + absence);
-        mostAbsentDay.setText("Most Absent Day: " + getMostAbsentDay(year, month));
-    }
+    public void loadContent(int month, int year) {
+        new Thread(() -> {
+            List<Date> presenceDates = classManager.getStudentPresence(studentId, classId, year, month);
+            List<Date> absenceDates = classManager.getStudentAbsence(studentId, classId, year, month);
+            List<Date> scheduleDates = classManager.getClassSchedule(classId);
+            // GUI update
+            Platform.runLater(() -> {
+                lineChart.getData().clear();
 
-    public void drawPieChart(int absence, int presence) {
+                pieChartDataList = FXCollections.observableArrayList(
+                        new PieChart.Data("Absence", absenceDates.size()),
+                        new PieChart.Data("Presence", presenceDates.size())
+                );
 
-        pieChartDataList = FXCollections.observableArrayList(
-                new PieChart.Data("Absence", absence),
-                new PieChart.Data("Presence", presence)
-        );
+                pieChart.setData(pieChartDataList);
 
-        pieChart.setData(pieChartDataList);
+                XYChart.Series<String, Number> presenceSeries = new XYChart.Series<>();
+                presenceSeries.setName("Presence");
+
+                for (Date date : scheduleDates) {
+                    if (presenceDates.stream().map(Date::toString).anyMatch(s -> s.equals(date.toString()))) {
+                        presenceSeries.getData().add(new XYChart.Data<>(String.valueOf(date.getDay()), 2));
+                    } else if (absenceDates.stream().map(Date::toString).anyMatch(s -> s.equals(date.toString()))) {
+                        presenceSeries.getData().add(new XYChart.Data<>(String.valueOf(date.getDay()), 1));
+                    }
+                }
+
+                lineChart.getData().add(presenceSeries);
+                totalPresence.setText("Total Presence: " + presenceDates.size());
+                totalAbsence.setText("Total Absence: " + absenceDates.size());
+                mostAbsentDay.setText("Most Absent Day: " + getMostAbsentDay(year, month));
+            });
+        }).start();
     }
 
     public void setStudentId(int id) {
